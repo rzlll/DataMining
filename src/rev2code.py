@@ -310,3 +310,4 @@ for i, sl in enumerate(all_node_vals_sorted):
     fw.write("%s,%s,%s,%s\n" %(str(sl[0]), str(sl[1]), str(sl[2]), str(sl[3])))
 fw.close()
 
+nx.gpickle.write_gpickle(G, "%s/%s-fng-sorted-users-%d-%d-%d-%d-%d-%d-%d.pkl" % (outdir, NETWORKNAME, alpha1, alpha2, beta1, beta2, gamma1, gamma2, gamma3))
