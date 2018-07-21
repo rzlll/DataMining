@@ -1,0 +1,8 @@
+.DS_Store
+
+# jupyter notebook cache
+.ipynb_checkpoints
+
+# datafiles
+fakedata
+rev2data
