@@ -61,7 +61,7 @@ T_index = np.random.randint(len(user_list))
 T = network_df['dest'][T_index]
 # K sockpuppets
 # K = int(2 * count_dict[T])
-K = int(k * count_dict[T] / 10)
+K = int(k * count_dict[T] / 5)
 # N geniune reviews for each sockpuppets
 N = N
 
