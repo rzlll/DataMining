@@ -30,5 +30,6 @@ for k in $(seq 0 10); do
         bash run-rev2-all-params.sh $data $k $n 100
     done
 done
+wait
 # done
 exit 0

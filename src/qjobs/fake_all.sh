@@ -26,5 +26,6 @@ for k in $(seq 0 10); do
         python ./fake.py $data $k $n &
     done
 done
+wait
 # done
 exit 0
