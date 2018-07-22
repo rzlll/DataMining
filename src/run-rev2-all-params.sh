@@ -33,10 +33,12 @@ do
 						(( c6+=1 ))
 					done
 					(( c5+=1 ))
+					# 9
+					wait
 				done
 				(( c4+=1 ))
 				#27
-				wait;
+				wait
 			done
 			(( c3+=1 ))
 			#81
