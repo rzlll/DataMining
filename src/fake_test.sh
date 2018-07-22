@@ -21,7 +21,7 @@ for data in alpha amazon epinions otc; do
     for k in $(seq 0 10); do
         for n in $(seq 0 10); do
             echo "$data, $k, $n"
-            OUTPUT_DIR="../res/fake-$data-$k-$n/"
+            OUTPUT_DIR="../rev2res/fake-$data-$k-$n/"
             if [ ! -d $OUTPUT_DIR ]; then
                 mkdir $OUTPUT_DIR
             fi
