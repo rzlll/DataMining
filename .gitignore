@@ -3,10 +3,12 @@
 # jupyter notebook cache
 .ipynb_checkpoints
 
-# datafiles
+# data files
 fakedata
 rev2data
-resdata
+
+# result files
+rev2res
 
 #pickles
 *.pkl

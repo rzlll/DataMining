@@ -58,7 +58,7 @@ import pickle
 
 print('load networkv2', '../fakedata/net-%s-%d-%d.pkl' %(NETWORKNAME, k, N))
 G = nx.gpickle.read_gpickle('../fakedata/net-%s-%d-%d.pkl' %(NETWORKNAME, k, N))
-outdir = '../res/fake-%s-%d-%d' %(NETWORKNAME, k, N)
+outdir = '../rev2res/fake-%s-%d-%d' %(NETWORKNAME, k, N)
 print('save to', outdir)
 
 
