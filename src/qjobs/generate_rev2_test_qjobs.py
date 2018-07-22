@@ -39,5 +39,5 @@ for d in ['alpla', 'amazon', 'epinions', 'otc']:
     for k in range(11):
         for n in range(11):
             tmp = sample.replace('$k', str(k)).replace('$n', str(n)).replace('$data', d)
-            with open('fake-%s-%d-%d.qjob' %(d, k, n), 'w') as f:
+            with open('rev2test-%s-%d-%d.qjob' %(d, k, n), 'w') as f:
                 f.write(tmp)
