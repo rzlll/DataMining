@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # Generate fake data
+data=$1
 
 # The name of the job, can be anything, simply used when displaying the list of running jobs
-#$ -N fake-all
+#$ -N fake-$data
 # Combining output/error messages into one file
 #$ -j y
 # Set memory request:
@@ -16,8 +17,6 @@
 #$ -V
 # Now comes the command to be executed
 source $HOME/venv/bin/activate
-
-data=$1
 
 # for data in alpha amazon epinions otc; do
 for k in $(seq 0 10); do
