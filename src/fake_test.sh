@@ -25,7 +25,7 @@ for data in alpha amazon epinions otc; do
             if [ ! -d $OUTPUT_DIR ]; then
                 mkdir $OUTPUT_DIR
             fi
-            bash run-rev2-all-params.sh $data $k $n
+            bash run-rev2-all-params.sh $data $k $n 10
         done
     done
 done

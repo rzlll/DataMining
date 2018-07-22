@@ -6,6 +6,7 @@
 # datafiles
 fakedata
 rev2data
+resdata
 
 #pickles
 *.pkl
