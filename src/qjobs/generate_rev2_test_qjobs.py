@@ -12,7 +12,7 @@ sample='''
 #$ -l vf=2G
 #$ -pe smp 10
 # Set walltime request:
-#$ -l h_rt=10:59:59
+#$ -l h_rt=1:59:59
 # One needs to tell the queue system to use the current directory as the working directory
 # Or else the script may fail as it will execute in your top level home directory /home/username
 #$ -cwd
