@@ -2,7 +2,7 @@
 # Run rev2 on all the data (with/without fake data)
 
 # The name of the job, can be anything, simply used when displaying the list of running jobs
-#$ -N fake-test
+#$ -N rev2-test
 # Combining output/error messages into one file
 #$ -j y
 # Set memory request:

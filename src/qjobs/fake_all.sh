@@ -3,7 +3,7 @@
 data=$1
 
 # The name of the job, can be anything, simply used when displaying the list of running jobs
-#$ -N fake-$data
+#$ -N fake-data
 # Combining output/error messages into one file
 #$ -j y
 # Set memory request:
