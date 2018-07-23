@@ -24,7 +24,8 @@ do
 					while [ $c6 -le 2 ]
 					do	
 						c7=0
-						while [ $c7 -le 2 ]
+						# set gamma3 to 0, remove birdnest score
+						while [ $c7 -le 0 ]
 						do	
 							python rev2code.py $NET $c1 $c2 $c3 $c4 $c5 $c6 $c7 $it $k $n &
 							echo $c1 $c2 $c3 $c4 $c5 $c6 $c7
