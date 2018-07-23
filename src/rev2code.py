@@ -123,8 +123,8 @@ product_map = dict(zip(product_names, range(len(product_names))))
 # full_birdnest_user = pickle.load(open("../rev2data/%s/%s_birdnest_user.pkl" % (NETWORKNAME, NETWORKNAME), "rb"), encoding = 'latin1')
 # full_birdnest_product = pickle.load(open("../rev2data/%s/%s_birdnest_product.pkl" %(NETWORKNAME, NETWORKNAME), "rb"), encoding = 'latin1')
 
-full_birdnest_user = [node for node in nodes if "u" in node]
-full_birdnest_product = [node for node in nodes if "p" in node]
+full_birdnest_user = [0] * len(user_names)
+full_birdnest_product = [0] * len(product_names)
 
 full_birdnest_edge = []
 # try:
