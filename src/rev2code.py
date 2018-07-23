@@ -120,27 +120,40 @@ num_products = len(product_names)
 user_map = dict(zip(user_names, range(len(user_names))))
 product_map = dict(zip(product_names, range(len(product_names))))
 
-full_birdnest_user = pickle.load(open("../rev2data/%s/%s_birdnest_user.pkl" % (NETWORKNAME, NETWORKNAME), "rb"), encoding = 'latin1')
-full_birdnest_product = pickle.load(open("../rev2data/%s/%s_birdnest_product.pkl" %(NETWORKNAME, NETWORKNAME), "rb"), encoding = 'latin1')
+# full_birdnest_user = pickle.load(open("../rev2data/%s/%s_birdnest_user.pkl" % (NETWORKNAME, NETWORKNAME), "rb"), encoding = 'latin1')
+# full_birdnest_product = pickle.load(open("../rev2data/%s/%s_birdnest_product.pkl" %(NETWORKNAME, NETWORKNAME), "rb"), encoding = 'latin1')
+
+full_birdnest_user = [node for node in nodes if "u" in node]
+full_birdnest_product = [node for node in nodes if "p" in node]
 
 full_birdnest_edge = []
-try:
-    print ('loading birdnest pickle')
-    full_birdnest_edge = pickle.load(open("../rev2data/%s/%s_edge_birdnest.pkl" % (NETWORKNAME, NETWORKNAME),"rb"), encoding = 'latin1')
-    edge_map = pickle.load(open("../rev2data/%s/%s_edge_map.pkl" % (NETWORKNAME, NETWORKNAME),"rb"), encoding = 'latin1')
-    full_birdnest_edge = numpy.array(full_birdnest_edge)
-    mn = min(full_birdnest_edge)
-    mx = max(full_birdnest_edge)
-    full_birdnest_edge = (full_birdnest_edge - mn)*1.0/(mx-mn+0.001)
-except:
-    print ("Didnt find edge birdnest scores for %s network" % NETWORKNAME)
-    full_birdnest_edge = [0.0]*len(edges)
+# try:
+#     print ('loading birdnest pickle')
+#     full_birdnest_edge = pickle.load(open("../rev2data/%s/%s_edge_birdnest.pkl" % (NETWORKNAME, NETWORKNAME),"rb"), encoding = 'latin1')
+#     edge_map = pickle.load(open("../rev2data/%s/%s_edge_map.pkl" % (NETWORKNAME, NETWORKNAME),"rb"), encoding = 'latin1')
+#     full_birdnest_edge = numpy.array(full_birdnest_edge)
+#     mn = min(full_birdnest_edge)
+#     mx = max(full_birdnest_edge)
+#     full_birdnest_edge = (full_birdnest_edge - mn)*1.0/(mx-mn+0.001)
+# except:
+#     print ("Didnt find edge birdnest scores for %s network" % NETWORKNAME)
+#     full_birdnest_edge = [0.0]*len(edges)
 
-    # adapted to nx v2
-    edges_arr = nx.convert_matrix.to_pandas_edgelist(G).values
-    ae = zip(edges_arr[:, 0], edges_arr[:, 1])
+#     # adapted to nx v2
+#     edges_arr = nx.convert_matrix.to_pandas_edgelist(G).values
+#     ae = zip(edges_arr[:, 0], edges_arr[:, 1])
 
-    edge_map = dict(zip(ae, range(len(edges))))
+#     edge_map = dict(zip(ae, range(len(edges))))
+
+# init birdnest score
+print ("Init birdnest for %s" % NETWORKNAME)
+full_birdnest_edge = [0.0]*len(edges)
+
+# adapted to nx v2
+edges_arr = nx.convert_matrix.to_pandas_edgelist(G).values
+ae = zip(edges_arr[:, 0], edges_arr[:, 1])
+
+edge_map = dict(zip(ae, range(len(edges))))
 
 for node in nodes:
     if "u" in node[0]:
