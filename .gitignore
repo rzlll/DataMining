@@ -7,6 +7,9 @@
 fakedata
 rev2data
 
+# figures
+rev2fig
+
 # result files
 rev2res
 

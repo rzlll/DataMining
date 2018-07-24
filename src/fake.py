@@ -57,7 +57,7 @@ print('min max %.2f %.2f' %(rating_min, rating_max))
 
 # target
 np.random.seed(29)
-T_index = np.random.randint(len(user_list))
+T_index = np.random.randint(len(prod_list))
 T = network_df['dest'][T_index]
 # K sockpuppets
 # K = int(2 * count_dict[T])
