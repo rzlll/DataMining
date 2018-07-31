@@ -10,7 +10,7 @@ sample='''
 #$ -j y
 # Set memory request:
 #$ -l vf=2G
-#$ -pe smp 10
+#$ -pe smp 12
 # Set walltime request:
 #$ -l h_rt=2:59:59
 # One needs to tell the queue system to use the current directory as the working directory
@@ -20,15 +20,14 @@ sample='''
 #$ -V
 # Now comes the command to be executed
 source $HOME/venv/bin/activate
-
-# for data in alpha amazon epinions otc; do
+cd $HOME/research/fake-review/src
 
 echo "$data, $k, $n"
-OUTPUT_DIR="../rev2res/fake-$data-$k-$n/"
+OUTPUT_DIR="../rev2res/fake-$data/"
 if [ ! -d $OUTPUT_DIR ]; then
-    mkdir $OUTPUT_DIR
+    mkdir -p $OUTPUT_DIR
 fi
-bash run-rev2-all-params.sh $data $k $n 20
+bash run-rev2-all-params.sh $data $k $n 20 0 9
 
 wait
 # done
@@ -39,5 +38,5 @@ for d in ['alpha', 'amazon', 'epinions', 'otc']:
     for k in range(11):
         for n in range(11):
             tmp = sample.replace('$k', str(k)).replace('$n', str(n)).replace('$data', d)
-            with open('rev2test-%s-%d-%d.qjob' %(d, k, n), 'w') as f:
+            with open('rev2run-%s-%d-%d.qjob' %(d, k, n), 'w') as f:
                 f.write(tmp)

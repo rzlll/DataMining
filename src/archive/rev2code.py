@@ -24,8 +24,7 @@ max_iter = int(sys.argv[9])
 k = int(sys.argv[10])
 N = int(sys.argv[11])
 
-if gamma1 == 0 and gamma2 == 0 and gamma3 == 0:
-        sys.exit(0)
+if gamma1 == 0 and gamma2 == 0 and gamma3 == 0: sys.exit(0)
 
 import random
 import subprocess
@@ -37,12 +36,8 @@ import networkx as nx
 import datetime
 import math
 from math import exp
-# import unicodecsv 
 import csv
-#import detect
-#import cpickle
 import pickle
-#import detect_iat
 
 # Comment block, use fake data instead
 

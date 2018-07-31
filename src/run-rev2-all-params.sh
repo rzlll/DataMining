@@ -4,50 +4,38 @@ NET=$1
 k=$2
 n=$3
 it=$4
+inds=$5
+inde=$6
 
-c1=0
-while [ $c1 -le 2 ]
+for c1 in $(seq 1 2)
 do
-    c2=0
-    while [ $c2 -le 2 ]
+    c2 in $(seq 1 2)
     do
-        c3=0
-        while [ $c3 -le 2 ]
+        for c3 in $(seq 1 2)
         do
-            c4=0
-            while [ $c4 -le 2 ]
-            do  
-                c5=0
-                while [ $c5 -le 2 ]
-                do  
-                    c6=0
-                    while [ $c6 -le 2 ]
-                    do  
-                        c7=0
-                        # set gamma3 to 0, remove birdnest score
-                        while [ $c7 -le 0 ]
-                        do  
-                            python rev2code.py $NET $c1 $c2 $c3 $c4 $c5 $c6 $c7 $it $k $n &
-                            echo $c1 $c2 $c3 $c4 $c5 $c6 $c7
-                            (( c7+=1 ))
+            for c4 in $(seq 1 2)
+            do
+                for c5 in $(seq 1 2)
+                do
+                    for c6 in $(seq 1 2)
+                    do
+                        for c7 in $(seq 1 2)
+                        do
+                            for ind in $(seq $inds $inde)
+                            do
+                                python rev2run.py $NET $c1 $c2 $c3 $c4 $c5 $c6 $c7 $it $k $n $ind &
+                                echo $NET $c1 $c2 $c3 $c4 $c5 $c6 $c7 $it $k $n $inds $inde
+                            done
+                            wait;
                         done
-                        (( c6+=1 ))
+                        wait;
                     done
-                    (( c5+=1 ))
-                    # 9
-                    wait
+                    wait;
                 done
-                (( c4+=1 ))
-                #27
-                wait
+                wait;
             done
-            (( c3+=1 ))
-            #81
             #wait;
         done
-        (( c2+=1 ))
-        #243
         #wait; 
     done
-    (( c1+=1 ))
 done
