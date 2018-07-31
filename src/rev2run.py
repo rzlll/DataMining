@@ -126,7 +126,7 @@ for node in G.nodes:
     else:
         G.node[node]['goodness'] = new_rating_dict[node]
 
-outdir = '../rev2res/fake-%s-%d-%d' %(data_name, k, N)
+outdir = '../rev2res/%s' %(data_name)
 print('save to', outdir)
 
 nodes = G.nodes()

@@ -27,7 +27,7 @@ OUTPUT_DIR="../rev2res/fake-$data/"
 if [ ! -d $OUTPUT_DIR ]; then
     mkdir -p $OUTPUT_DIR
 fi
-bash run-rev2-all-params.sh $data $k $n 20 0 9
+bash run-rev2-all-params.sh $data $k $n 50 0 19
 
 wait
 # done
