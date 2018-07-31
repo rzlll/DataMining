@@ -9,7 +9,7 @@ inde=$6
 
 for c1 in $(seq 1 2)
 do
-    c2 in $(seq 1 2)
+    for c2 in $(seq 1 2)
     do
         for c3 in $(seq 1 2)
         do
