@@ -10,7 +10,7 @@ sample='''
 #$ -j y
 # Set memory request:
 #$ -l vf=2G
-#$ -pe smp 12
+#$ -pe smp 8
 # Set walltime request:
 #$ -l h_rt=2:59:59
 # One needs to tell the queue system to use the current directory as the working directory
