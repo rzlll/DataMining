@@ -69,7 +69,7 @@ print('reviews %d' %network_df.shape[0])
 # print('min max %.2f %.2f' %(rating_min, rating_max))
 
 # target
-np.random.seed(29)
+np.random.seed(53)
 T_index = np.random.permutation(len(prod_list))[ind]
 T = network_df['dest'][T_index]
 # K sockpuppets
@@ -88,7 +88,7 @@ def generate_sockpuppets(base_index=0, num=1):
     socks = np.arange(base_index, base_index+num).tolist()
     return socks
 
-np.random.seed(0)
+np.random.seed(79)
 def generate_reviews(user, prod, prod_list, num):
     fr = rating_max
     if rating_dict[prod] > 0:

@@ -19,7 +19,7 @@ do
                 do
                     for c6 in $(seq 1 2)
                     do
-                        for c7 in $(seq 1 2)
+                        for c7 in $(seq 0 0)
                         do
                             for ind in $(seq $inds $inde)
                             do

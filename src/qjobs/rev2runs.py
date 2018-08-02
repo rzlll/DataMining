@@ -12,7 +12,7 @@ sample='''
 #$ -l vf=2G
 #$ -pe smp 8
 # Set walltime request:
-#$ -l h_rt=2:59:59
+#$ -l h_rt=3:59:59
 # One needs to tell the queue system to use the current directory as the working directory
 # Or else the script may fail as it will execute in your top level home directory /home/username
 #$ -cwd
@@ -27,7 +27,7 @@ OUTPUT_DIR="../rev2res/$data/"
 if [ ! -d $OUTPUT_DIR ]; then
     mkdir -p $OUTPUT_DIR
 fi
-bash run-rev2-all-params.sh $data $k $n 50 0 19
+bash run-rev2-all-params.sh $data $k $n 20 0 19
 
 wait
 # done
