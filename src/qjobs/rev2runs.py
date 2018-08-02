@@ -9,7 +9,7 @@ sample='''
 # Combining output/error messages into one file
 #$ -j y
 # Set memory request:
-#$ -l vf=2G
+#$ -l vf=1G
 #$ -pe smp 8
 # Set walltime request:
 #$ -l h_rt=3:59:59
