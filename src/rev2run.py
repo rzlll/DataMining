@@ -52,6 +52,7 @@ print(gt_df.shape)
 print('rating describe')
 print(network_df['rating'].describe())
 
+ts_max = network_df['timestamp'].max()
 user_list = network_df['src'].unique().tolist()
 prod_list = network_df['dest'].unique().tolist()
 rev_per_prod = network_df.shape[0]/len(prod_list)
@@ -93,7 +94,7 @@ def generate_reviews(user, prod, prod_list, num):
     fr = rating_max
     if rating_dict[prod] > 0:
         fr = rating_min
-    reviews = [[user, prod, fr, pd.datetime.now()]]
+    reviews = [[user, prod, fr, ts_max]]
     fr_prods = np.random.permutation(prod_list)[:num]
     reviews += [[user, p, np.clip(np.random.normal(rating_dict[p], std_dict[p], 1)[0], a_min=rating_min, a_max=rating_max), pd.datetime.today()] for p in fr_prods]
     return reviews
@@ -128,6 +129,8 @@ for node in G.nodes:
 
 outdir = '../rev2res/%s' %(data_name)
 print('save to', outdir)
+
+## algorithm begins here
 
 nodes = G.nodes()
 # nodes = list(G.nodes)  # To solve AttributeError
