@@ -31,7 +31,7 @@ def fit_alpha(D):
             print("fitting iteration stopped early at iteration", it)
             break
         alpha = alpha_next.copy()
-        print(alpha)
+        # print(alpha)
     return alpha + 1
 
 # @profile

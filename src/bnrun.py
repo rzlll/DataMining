@@ -7,11 +7,6 @@ import pandas as pd
 import sklearn
 import networkx as nx
 
-import matplotlib
-import matplotlib.pyplot as plt
-import seaborn as sns
-matplotlib.rc('text', usetex=True)
-
 import time, datetime
 import pickle
 import birdnestlib as bn
