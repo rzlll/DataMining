@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 
-data=$1
+if [ $# -ne 2 ]; then
+    echo "usage: run-alg.sh alg data"
+    exit 1
+fi
 
-OUTPUT_DIR="../bnres/$data/"
+alg=$1
+data=$2
+
+OUTPUT_DIR="../${alg}res/$data/"
 if [ ! -d $OUTPUT_DIR ]; then
     mkdir -p $OUTPUT_DIR
     echo "create $OUTPUT_DIR"
@@ -14,8 +20,8 @@ do
     do
         for ind in $(seq 0 19)
         do
-            echo $data $k $N $ind
-            python bnrun.py $data $k $N $ind &
+            echo ${alg}run.py $data $k $N $ind
+            python ${alg}run.py $data $k $N $ind &
         done
         wait;
     done
