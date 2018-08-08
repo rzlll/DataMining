@@ -48,7 +48,7 @@ def compute_score_avg(k=0, n=0, ind=0):
     yscore = [user_score[u] for u in u_list]
     return {'ulist': u_list, 'ytrue': ytrue, 'yscore': yscore}
 
-results = Parallel(n_jobs=-1, verbose=3)(delayed(compute_score_avg)(data_name, k, n, ind) for k, n, ind in itertools.product(range(11), range(11), range(20)))
+results = Parallel(n_jobs=-1, verbose=3)(delayed(compute_score_avg)(k, n, ind) for k, n, ind in itertools.product(range(11), range(11), range(20)))
 
 results_dict = dict(zip(itertools.product(range(11), range(11), range(20)), results))
 
