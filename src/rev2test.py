@@ -28,8 +28,7 @@ def compute_score_avg(k=0, n=0, ind=0):
     ret = {}
     cnt = 0
     missing_files = []
-    for c1, c2, c3, c4, c5, c6, c7 in itertools.product(range(1, 3), range(1, 3), range(1, 3), range(1, 3), range(1, 3), range(1, 3), range(1, 3)):
-        if c5 == 0 and c6 == 0: continue
+    for c1, c2, c3, c4, c5, c6, c7 in itertools.product(range(1, 3), range(1, 3), range(1, 3), range(1, 3), range(1, 3), range(1, 3), range(0, 0)):
         file_path = '../rev2res/%s/%s-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d.csv' %(data_name, data_name, c1, c2, c3, c4, c5, c6, c7, k, n, ind)
         if not os.path.exists(file_path): missing_files += [file_path]; continue
         df = pd.read_csv(file_path, header=None)
