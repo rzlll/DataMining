@@ -11,7 +11,7 @@ rev2data
 rev2fig
 
 # result files
-*res/
+*res
 
 #pickles
 *.pkl
