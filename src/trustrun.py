@@ -58,7 +58,7 @@ dr = 0
 dt = 0
 dh = 0
     
-while iter_idx < 100:
+while iter_idx < 50:
     print("-----\niter: ", iter_idx)
     
     print(dr, dt, dh)
