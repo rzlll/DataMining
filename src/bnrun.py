@@ -113,8 +113,9 @@ if True:
         full_birdnest_user = zip(range(num_users), bn.detect(user_rating_mat, user_timestamp_mat, True, 2))
         # full_birdnest_product = zip(range(num_users), bn.detect(product_rating_mat, product_timestamp_mat, True, True, 1))
 
-ret = [(rev_user_map[ent[0]], ent[1]) for ent in full_birdnest_user]
-pd.DataFrame(ret).to_csv(outfile, header=False, index=False)
+full_birdnest_user_scores = [(rev_user_map[ent[0]], ent[1]) for ent in full_birdnest_user]
+bn_list = [x for x in full_birdnest_user_scores if x[0] in out_list]
+pd.DataFrame(bn_list).to_csv(outfile, header=False, index=False)
 
 # sorted_full_birdnest_user = sorted(full_birdnest_user, key=lambda x: x[1])
 # sorted_full_birdnest_product = sorted(full_birdnest_product, key=lambda x: x[1])

@@ -29,7 +29,10 @@ def compute_score(k=0, n=0, ind=0):
     results_df = pd.read_csv('../%sres/%s/%s-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)
     user_score = dict(zip(results_df[0], results_df[1]))
     u_list = [u for u in user_score if u in gt or u not in user_list]
-    ytrue = [1 if u in gt and gt[u] == 1 else 0 for u in u_list]
+    # if user is good in ground truth output 0
+    # if user is fraudster in ground truth output 1
+    # if user is sockpuppet output 2
+    ytrue = [0 if u in gt and gt[u] == 1 else 1 if u in gt else 2 for u in u_list]
     yscore = [user_score[u] for u in u_list]
     return {'ulist': u_list, 'ytrue': ytrue, 'yscore': yscore}
 

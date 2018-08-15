@@ -44,9 +44,9 @@ print('reviews %d' %network_df.shape[0])
 # target
 np.random.seed(53)
 T_index = np.random.permutation(len(prod_list))[ind]
-T = network_df['dest'][T_index]
-# K sockpuppets
-K = int(k * count_dict[T] / 10)
+T = prod_list[T_index]
+# K sockpuppets, minimum is set to 1 if k is non-zero
+K = int(np.ceil(k * count_dict[T] / 10))
 # N geniune reviews for each sockpuppets
 N = N
 
@@ -58,7 +58,11 @@ print('generate %d socks' %K)
 print('%d reviews per sock' %N)
 
 def generate_sockpuppets(base_index=0, num=1):
-    socks = np.arange(base_index, base_index+num).tolist()
+    # socks = np.arange(base_index, base_index+num).tolist()
+    socks = []
+    while len(socks) < num:
+        r = np.random.randint(low=len(user_list), high=10*len(user_list))
+        if r not in user_list: socks += [r]
     return socks
 
 np.random.seed(79)
@@ -99,3 +103,5 @@ for node in G.nodes:
         G.node[node]['fairness'] = 1
     else:
         G.node[node]['goodness'] = new_rating_dict[node]
+
+out_list = ['u'+str(u) for u in socks + gt_df['id'].tolist()]
