@@ -20,7 +20,13 @@ function run() {
     do
         for N in $(seq 0 10)
         do
-            for ind in $(seq 0 50)
+            for ind in $(seq 11 30)
+            do
+                echo ${alg}run.py $data $k $N $ind
+                python ${alg}run.py $data $k $N $ind &
+            done
+            wait;
+            for ind in $(seq 31 49)
             do
                 echo ${alg}run.py $data $k $N $ind
                 python ${alg}run.py $data $k $N $ind &
