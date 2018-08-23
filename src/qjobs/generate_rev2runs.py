@@ -5,7 +5,7 @@ sample='''
 # Run rev2 on all the data (with/without fake data)
 
 # The name of the job, can be anything, simply used when displaying the list of running jobs
-#$ -N rev2-$data-$k-$n-$inds
+#$ -N $qjob_name
 # Combining output/error messages into one file
 #$ -j y
 # Set memory request:
@@ -40,6 +40,7 @@ for d in ['alpha', 'amazon', 'epinions', 'otc']:
     for k in range(11):
         for n in range(11):
             for inds in range(0, 100, step):
-                tmp = sample.replace('$k', str(k)).replace('$n', str(n)).replace('$data', d).replace('$inds', str(inds)).replace('$inde', str(inds + step - 1))
-                with open('rev2run-%s-%d-%d-%d.qjob' %(d, k, n, inds), 'w') as f:
+                qjob_name = 'rev2run-%s-%d-%d-%d.qjob' %(d, k, n, inds)
+                tmp = sample.replace('$k', str(k)).replace('$n', str(n)).replace('$data', d).replace('$inds', str(inds)).replace('$inde', str(inds + step - 1)).replace('$qjob_name', qjob_name)
+                with open(qjob_name, 'w') as f:
                     f.write(tmp)
