@@ -9,7 +9,7 @@ alg=$1
 
 function run() {
     data=$1
-    echo "run $ alg $data"
+    echo "run $alg $data"
     OUTPUT_DIR="../${alg}res/$data/"
     if [ ! -d $OUTPUT_DIR ]; then
         mkdir -p $OUTPUT_DIR
@@ -20,7 +20,7 @@ function run() {
     do
         for N in $(seq 0 10)
         do
-            for ind in $(seq 0 19)
+            for ind in $(seq 0 50)
             do
                 echo ${alg}run.py $data $k $N $ind
                 python ${alg}run.py $data $k $N $ind &
