@@ -12,7 +12,7 @@ sample='''
 #$ -l vf=1G
 #$ -pe smp 8
 # Set walltime request:
-#$ -l h_rt=3:59:59
+#$ -l h_rt=2:59:59
 # One needs to tell the queue system to use the current directory as the working directory
 # Or else the script may fail as it will execute in your top level home directory /home/username
 #$ -cwd
@@ -27,16 +27,19 @@ OUTPUT_DIR="../rev2res/$data/"
 if [ ! -d $OUTPUT_DIR ]; then
     mkdir -p $OUTPUT_DIR
 fi
-bash run-rev2-all-params.sh $data $k $n 20 0 19
+bash run-rev2-all-params.sh $data $k $n 50 $inds $inde
 
 wait
 # done
 exit 0
 '''
 
+step = 10
+
 for d in ['alpha', 'amazon', 'epinions', 'otc']:
     for k in range(11):
         for n in range(11):
-            tmp = sample.replace('$k', str(k)).replace('$n', str(n)).replace('$data', d)
-            with open('rev2run-%s-%d-%d.qjob' %(d, k, n), 'w') as f:
-                f.write(tmp)
+            for inds in range(0, 100, step):
+                tmp = sample.replace('$k', str(k)).replace('$n', str(n)).replace('$data', d).replace('$inds', str(inds)).replace('$inde', str(inds + step - 1))
+                with open('rev2run-%s-%d-%d-%d.qjob' %(d, k, n, inds), 'w') as f:
+                    f.write(tmp)
