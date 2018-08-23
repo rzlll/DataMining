@@ -153,7 +153,7 @@ user_nodes = [n for n in G.nodes() if 'u' in n]
 trustiness_scores = [G.node[n]['trustiness'] for n in user_nodes]
 sortedlist_gw = sorted(zip(user_nodes, trustiness_scores), key=itemgetter(1))
 
-trust_list = [x for x in sortedlist_gw if x[0] in out_list]
+trust_list = [[out_dict[x[0]]]+[x] for x in sortedlist_gw if x[0] in out_dict]
 pd.DataFrame(trust_list).to_csv(outfile, header=False, index=False)
 
 # fw = open("result/alpha-icdm2011-sorted-users2.csv","w")
@@ -170,4 +170,3 @@ pd.DataFrame(trust_list).to_csv(outfile, header=False, index=False)
 # for gg in sortedlist_gw:
 #   fw.write("%s,%f\n" % gg)
 # fw.close()
-

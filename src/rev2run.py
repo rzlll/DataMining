@@ -213,6 +213,6 @@ for node in nodes:
 
 outfile = '%s/%s-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d.csv' % (outdir, data_name, alpha1, alpha2, beta1, beta2, gamma1, gamma2, gamma3, k, N, ind)
 
-rev2_list = [x for x in all_node_vals if x[0] in out_list]
+rev2_list = [[out_dict[x[0]]]+[x] for x in all_node_vals if x[0] in out_dict]
 pd.DataFrame(rev2_list).to_csv(outfile, header=False, index=False)
 print('saved to %s' %outfile)

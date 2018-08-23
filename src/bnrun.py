@@ -114,7 +114,7 @@ if True:
         # full_birdnest_product = zip(range(num_users), bn.detect(product_rating_mat, product_timestamp_mat, True, True, 1))
 
 full_birdnest_user_scores = [(rev_user_map[ent[0]], ent[1]) for ent in full_birdnest_user]
-bn_list = [x for x in full_birdnest_user_scores if x[0] in out_list]
+bn_list = [[out_dict[x[0]]]+[x] for x in full_birdnest_user_scores if x[0] in out_dict]
 pd.DataFrame(bn_list).to_csv(outfile, header=False, index=False)
 
 # sorted_full_birdnest_user = sorted(full_birdnest_user, key=lambda x: x[1])

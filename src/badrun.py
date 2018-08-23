@@ -93,7 +93,7 @@ for node in nodes:
 # goodness_vals = np.array(goodness_vals)
 # sortedlist = sorted(goodness_vals, key= lambda x: (float(x[1]), -1*float(x[2])))
 
-bad_list = [x for x in goodness_vals if x[0] in out_list]
+bad_list = [[out_dict[x[0]]]+[x] for x in goodness_vals if x[0] in out_dict]
 pd.DataFrame(bad_list).to_csv(outfile, header=False, index=False)
 
 # fw = open("result/%s-bad-sorted-users.csv" % (data_name),"w")

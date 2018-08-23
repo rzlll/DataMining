@@ -41,10 +41,22 @@ print('users %d' %len(user_list))
 print('products %d' %len(prod_list))
 print('reviews %d' %network_df.shape[0])
 
+# get the target pool
+gt_dict = dict(gt_df.values)
+sd_list = network_df[['src', 'dest']].values.tolist()
+target_pool_bad = set([t[1] for t in sd_list if t[0] in gt_dict and gt_dict[t[0]] == -1])
+target_pool_good = set([t[1] for t in sd_list if t[0] in gt_dict and gt_dict[t[0]] == 1])
+target_pool = list(target_pool_good & target_pool_bad)
+
+print('Target pool size %d, index at %d' %(len(target_pool), ind))
+if len(target_pool) <= ind:
+    print('exit')
+    exit()
+
 # target
 np.random.seed(53)
-T_index = np.random.permutation(len(prod_list))[ind]
-T = prod_list[T_index]
+T_index = np.random.permutation(len(target_pool))[ind]
+T = target_pool[T_index]
 # K sockpuppets, minimum is set to 1 if k is non-zero
 K = int(np.ceil(k * count_dict[T] / 10))
 # N geniune reviews for each sockpuppets
@@ -105,3 +117,6 @@ for node in G.nodes:
         G.node[node]['goodness'] = new_rating_dict[node]
 
 out_list = ['u'+str(u) for u in socks + gt_df['id'].tolist()]
+
+out_dict = {'u'+str(t[0]): gt_dict[t[0]] for t in sd_list if t[1] == T and t[0] in gt_dict}
+out_dict.update({'u'+str(u): -1 for u in socks})
