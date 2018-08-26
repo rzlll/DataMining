@@ -93,8 +93,11 @@ for node in nodes:
 # goodness_vals = np.array(goodness_vals)
 # sortedlist = sorted(goodness_vals, key= lambda x: (float(x[1]), -1*float(x[2])))
 
-bad_list = [[out_dict[x[0]]]+[x] for x in goodness_vals if x[0] in out_dict]
-pd.DataFrame(bad_list).to_csv(outfile, header=False, index=False)
+bad_list = [[out_dict[x[0]]]+list(x) for x in goodness_vals if x[0] in out_dict]
+
+out_list = [[x[0]] + ['s' + x[1][1:]] + x[2:] if x[1] in socks_list else x for x in bad_list]
+out_list = sorted(out_list, key=lambda x: (x[2], -1 * x[3]))
+pd.DataFrame(out_list).to_csv(outfile, header=False, index=False)
 
 # fw = open("result/%s-bad-sorted-users.csv" % (data_name),"w")
 # for gg in sortedlist:
