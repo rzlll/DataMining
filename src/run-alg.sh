@@ -20,16 +20,42 @@ function run() {
     do
         for N in $(seq 0 10)
         do
-            for ind in $(seq 11 30)
+            for ind in $(seq 0 15)
             do
-                echo ${alg}run.py $data $k $N $ind
-                python ${alg}run.py $data $k $N $ind &
+                if [ $alg = 'rev2' ]
+                then
+                    echo ${alg}run.py $data 1 1 1 1 1 1 0 50 $k $N $ind
+                    python ${alg}run.py $data 1 1 1 1 1 1 0 50 $k $N $ind &
+                else
+                    echo ${alg}run.py $data $k $N $ind
+                    python ${alg}run.py $data $k $N $ind &
+                fi
             done
             wait;
-            for ind in $(seq 31 49)
+            
+            for ind in $(seq 16 32)
             do
-                echo ${alg}run.py $data $k $N $ind
-                python ${alg}run.py $data $k $N $ind &
+                if [ $alg = 'rev2' ]
+                then
+                    echo ${alg}run.py $data 1 1 1 1 1 1 0 50 $k $N $ind
+                    python ${alg}run.py $data 1 1 1 1 1 1 0 50 $k $N $ind &
+                else
+                    echo ${alg}run.py $data $k $N $ind
+                    python ${alg}run.py $data $k $N $ind &
+                fi
+            done
+            wait;
+            
+            for ind in $(seq 33 49)
+            do
+                if [ $alg = 'rev2' ]
+                then
+                    echo ${alg}run.py $data 1 1 1 1 1 1 0 50 $k $N $ind
+                    python ${alg}run.py $data 1 1 1 1 1 1 0 50 $k $N $ind &
+                else
+                    echo ${alg}run.py $data $k $N $ind
+                    python ${alg}run.py $data $k $N $ind &
+                fi
             done
             wait;
         done

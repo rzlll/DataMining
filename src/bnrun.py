@@ -105,17 +105,22 @@ if True:
                 product_rating_mat[product_map[node], :] = y
         if sum(y)!=0.0:
                 y = y*1.0/sum(y)
-        
-    if sys.argv[1] == 'epinions':
-        full_birdnest_user = zip(range(num_users), bn.detect(user_rating_mat, user_timestamp_mat, False, 1))
+
+    full_birdnest_user = zip(range(num_users), bn.detect(user_rating_mat, user_timestamp_mat, False, 1))
+    # if sys.argv[1] == 'epinions':
+        # full_birdnest_user = zip(range(num_users), bn.detect(user_rating_mat, user_timestamp_mat, False, 1))
         # full_birdnest_product = zip(range(num_users), bn.detect(product_rating_mat, product_timestamp_mat, True, False, 1))
-    else:
-        full_birdnest_user = zip(range(num_users), bn.detect(user_rating_mat, user_timestamp_mat, True, 2))
+    # else:
+        # full_birdnest_user = zip(range(num_users), bn.detect(user_rating_mat, user_timestamp_mat, True, 2))
         # full_birdnest_product = zip(range(num_users), bn.detect(product_rating_mat, product_timestamp_mat, True, True, 1))
 
 full_birdnest_user_scores = [(rev_user_map[ent[0]], ent[1]) for ent in full_birdnest_user]
-bn_list = [[out_dict[x[0]]]+[x] for x in full_birdnest_user_scores if x[0] in out_dict]
-pd.DataFrame(bn_list).to_csv(outfile, header=False, index=False)
+
+bn_list = [[out_dict[x[0]]]+list(x) for x in full_birdnest_user_scores if x[0] in out_dict]
+
+out_list = [[x[0]] + ['s' + x[1][1:]] + x[2:] if x[1] in socks_list else x for x in bn_list]
+out_list = sorted(out_list, key=lambda x: x[2])
+pd.DataFrame(out_list).to_csv(outfile, header=False, index=False)
 
 # sorted_full_birdnest_user = sorted(full_birdnest_user, key=lambda x: x[1])
 # sorted_full_birdnest_product = sorted(full_birdnest_product, key=lambda x: x[1])
