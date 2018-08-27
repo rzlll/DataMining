@@ -34,19 +34,22 @@ def parse_data(df):
         sline = l1[l].strip('()[]').split(',')
         ret.append([l0[l], sline[0]] + list(map(float, sline[1:])))
     if alg_name == 'bad':
-        sortedret = sorted(ret, key=lambda x: x[3])
+        sortedret = sorted(ret, key=lambda x: (x[2], x[3]))
     else:
         sortedret = sorted(ret, key=lambda x: x[2])
     return pd.DataFrame(sortedret)
 
 def compute_score(k=0, n=0, ind=0):
-    results_df = pd.read_csv('../%sres/%s/%s-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)
+    if alg_name == 'rev2':
+        results_df = pd.read_csv('../%sres/%s/%s-1-1-1-1-1-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)
+    else:
+        results_df = pd.read_csv('../%sres/%s/%s-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)
     if len(results_df.columns) < 3: results_df = parse_data(results_df)
     # if user is good in ground truth output 0
     # if user is fraudster in ground truth output 1
     # if user is sockpuppet output 2
     ytrue = [0 if t==1 else 1 for t in results_df[0].tolist()]
-    ulist = [u if u in user_list else 's'+u[1:] for u in results_df[1].tolist()]
+    ulist = results_df[1].tolist()
     yscore = results_df[2].tolist()
     return {'ulist': ulist, 'ytrue': ytrue, 'yscore': yscore}
 
