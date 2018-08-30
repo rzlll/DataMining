@@ -20,10 +20,10 @@ function run_single() {
     if [ $alg = 'rev2' ]
     then
         echo ${alg}run.py $data 1 1 1 1 1 1 0 50 $k $N $ind
-        # python ${alg}run.py $data 1 1 1 1 1 1 0 50 $k $N $ind
+        python ${alg}run.py $data 1 1 1 1 1 1 0 50 $k $N $ind
     else
         echo ${alg}run.py $data $k $N $ind
-        # python ${alg}run.py $data $k $N $ind
+        python ${alg}run.py $data $k $N $ind
     fi
 }
 
