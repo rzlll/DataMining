@@ -49,6 +49,7 @@ function run_parallel() {
                 done
                 wait;
             done
+            wait;
         done
     done
 }
@@ -61,4 +62,3 @@ do
     run_parallel $var
     echo "finish $alg $ncore $data"
 done
-
