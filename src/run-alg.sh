@@ -19,17 +19,17 @@ function run_single() {
 
     if [ $alg = 'rev2' ]
     then
-        echo ${alg}run.py $data 1 1 1 1 1 1 0 50 $k $N $ind
-        python ${alg}run.py $data 1 1 1 1 1 1 0 50 $k $N $ind
+        echo algs/${alg}.py $data 1 1 1 1 1 1 0 50 $k $N $ind
+        python algs/${alg}.py $data 1 1 1 1 1 1 0 50 $k $N $ind
     else
-        echo ${alg}run.py $data $k $N $ind
-        python ${alg}run.py $data $k $N $ind
+        echo algs/${alg}.py $data $k $N $ind
+        python algs/${alg}.py $data $k $N $ind
     fi
 }
 
 function run_parallel() {
     data=$1
-    OUTPUT_DIR="../${alg}res/$data/"
+    OUTPUT_DIR="../res/${alg}/$data/"
     if [ ! -d $OUTPUT_DIR ]; then
         mkdir -p $OUTPUT_DIR
         echo "create $OUTPUT_DIR"
