@@ -10,7 +10,6 @@ import networkx as nx
 import time, datetime
 
 import fraud_eagle as feagle
-import numba
 
 data_name = sys.argv[1]
 k = int(sys.argv[2])
@@ -30,7 +29,6 @@ products = {n: graph.new_product(n) for n in G.node if n.startswith('p')}
 for e in G.edges:
     graph.add_review(reviewers[e[0]], products[e[1]], G.edges[e]['weight'])
 
-@numba.jit()
 for it in range(20):
     diff = graph.update()
     print('iter %d, diff %.2f' %(it, diff))
