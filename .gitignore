@@ -4,14 +4,13 @@
 .ipynb_checkpoints
 
 # data files
-fakedata
 rev2data
 
 # figures
-rev2fig
+figures
 
 # result files
-*res
+res
 
 #pickles
 *.pkl
