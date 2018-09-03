@@ -33,7 +33,7 @@ if gamma1 == 0 and gamma2 == 0 and gamma3 == 0: sys.exit(0)
 
 exec(open('fake_block.py', 'r').read())
 
-outdir = '../rev2res/%s' %(data_name)
+outdir = '../res/rev2/%s' %(data_name)
 print('save to', outdir)
 
 ## algorithm begins here

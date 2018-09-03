@@ -34,7 +34,7 @@ source $HOME/venv/bin/activate
 cd $HOME/research/fake-review/src
 
 echo "$data, $k, $n"
-OUTPUT_DIR="../rev2res/$data/"
+OUTPUT_DIR="../res/rev2/$data/"
 if [ ! -d $OUTPUT_DIR ]; then
     mkdir -p $OUTPUT_DIR
 fi
