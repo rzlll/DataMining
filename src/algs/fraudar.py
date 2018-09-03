@@ -9,7 +9,11 @@ import networkx as nx
 
 import time, datetime
 
-import fraudar
+# the normal import doesn't work, because this script has exactly same name as the module
+# import fraudar
+import imp
+f, pathname, desc = imp.find_module('fraudar', sys.path[1:])
+fraudar = imp.load_module('fraudar', f, pathname, desc)
 
 data_name = sys.argv[1]
 k = int(sys.argv[2])
