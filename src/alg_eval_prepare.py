@@ -3,7 +3,6 @@
 import os, sys, argparse
 import numpy as np
 import pandas as pd
-import numba
 
 import sklearn
 
@@ -42,7 +41,6 @@ def parse_data(df):
         sortedret = sorted(ret, key=lambda x: x[2])
     return pd.DataFrame(sortedret)
 
-@numba.jit
 def compute_score(k=0, n=0, ind=0):
     if alg_name == 'rev2':
         results_df = pd.read_csv('../res/%s/%s/%s-1-1-1-1-1-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)

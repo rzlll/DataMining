@@ -32,7 +32,7 @@ reviewers = {n: graph.new_reviewer(n) for n in G.node if n.startswith('u')}
 products = {n: graph.new_product(n) for n in G.node if n.startswith('p')}
 
 for e in G.edges:
-    graph.add_review(reviewers[e[0]], products[e[1]], G.edges[e]['weight'])
+    graph.add_review(reviewers[e[0]], products[e[1]], (G.edges[e]['weight'] + 1)/2)
 
 graph.update()
 
