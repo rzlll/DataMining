@@ -27,8 +27,8 @@ The `trust` seemed to be the most robust against this kind of attacks.
 
 
 ##### The next step:
-The *ALPHA* and *OTC* data are smaller than *AMAZON* and *EPINIONS* data.
-The immediate next step is to test the attack against the two bigger datasets (*AMAZON* and *EPINIONS*).
+The *ALPHA* and *OTC* data are smaller in size than *AMAZON* and *EPINIONS* data.
+The immediate next step is to test the attack on the two bigger datasets (*AMAZON* and *EPINIONS*).
 The other thing is to come up with ideas to defend this kind of attack.
 The `birdnest` and `rev2` algorithm took look at the distributions of the rating.
 However, the `trust` and `rsd`, which had better performance against the attack, focused on the reliability/trustness of the user.
