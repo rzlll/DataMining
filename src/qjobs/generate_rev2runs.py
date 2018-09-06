@@ -3,7 +3,7 @@
 import sys, os
 import argparse
 
-sample='''
+sample_script_rev2 = '''
 #!/usr/bin/env bash
 # Run rev2 on all the data (with/without fake data)
 
@@ -13,13 +13,13 @@ sample='''
 #$ -j y
 
 # Set memory request:
-#$ -l vf=1G
+#$ -l vf=30G
 
 # ironfs access
 ##$ -l ironfs
 
 # number of processes (cores)
-#$ -pe smp 8
+##$ -pe smp 8
 
 # Set walltime request:
 #$ -l h_rt=3:59:59
@@ -62,6 +62,6 @@ if __name__ == '__main__':
         for n in range(11):
             for inds in range(i_s, i_e, step):
                 qjob_name = 'rev2run-%s-%d-%d-%d.qjob' %(d, k, n, inds)
-                tmp = sample.replace('$k', str(k)).replace('$n', str(n)).replace('$data', d).replace('$inds', str(inds)).replace('$inde', str(inds + step - 1)).replace('$qjob_name', qjob_name)
+                tmp = sample_script_rev2.replace('$k', str(k)).replace('$n', str(n)).replace('$data', d).replace('$inds', str(inds)).replace('$inde', str(inds + step - 1)).replace('$qjob_name', qjob_name)
                 with open(qjob_name, 'w') as f:
                     f.write(tmp)
