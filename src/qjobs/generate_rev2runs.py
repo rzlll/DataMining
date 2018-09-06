@@ -57,10 +57,13 @@ if __name__ == '__main__':
 
     if parsed.clean:
         print('cleanup qjobs')
-        subprocess.run(['rm', '-vf', '*.qjobs'])
+        proc_ret = subprocess.run('rm -vf *.qjobs', shell=True)
+        print(proc_ret)
         print('cleanup outputs')
-        subprocess.run(['rm', '-vf', '*.o*'])
-        subprocess.run(['rm', '-vf', '*.po*'])
+        proc_ret = subprocess.run('rm -vf *.o*', shell=True)
+        print(proc_ret)
+        proc_ret = subprocess.run('rm -vf *.po*', shell=True)
+        print(proc_ret)
         exit()
     
     step = 10
