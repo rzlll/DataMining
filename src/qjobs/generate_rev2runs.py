@@ -66,7 +66,7 @@ if __name__ == '__main__':
         print(proc_ret)
         exit()
     
-    step = 10
+    step = 13
     d = parsed.data
     i_s = int(parsed.index[0])
     i_e = int(parsed.index[1])
