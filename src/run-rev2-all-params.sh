@@ -23,8 +23,8 @@ do
                         do
                             for ind in $(seq $inds $inde)
                             do
-                                python rev2run.py $NET $c1 $c2 $c3 $c4 $c5 $c6 $c7 $it $k $n $ind &
-                                echo $NET $c1 $c2 $c3 $c4 $c5 $c6 $c7 $it $k $n $inds $inde
+                                python algs/rev2run.py $NET $c1 $c2 $c3 $c4 $c5 $c6 $c7 $it $k $n $ind &
+                                echo algs/rev2run.py $NET $c1 $c2 $c3 $c4 $c5 $c6 $c7 $it $k $n $inds $inde
                             done
                             wait;
                         done
