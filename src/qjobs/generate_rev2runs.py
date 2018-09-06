@@ -2,6 +2,7 @@
 
 import sys, os
 import argparse
+import subprocess
 
 sample_script_rev2 = '''
 #!/usr/bin/env bash
@@ -47,11 +48,20 @@ exit 0
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Exploits pages')
-    parser.add_argument('-d', '--data', action='store', choices=['alpha', 'amazon', 'epinions', 'otc'], required=True, help='target dataset')
-    parser.add_argument('-i', '--index', action='store', nargs=2, required=True, help='start and end index of target product')
+    parser.add_argument('-d', '--data', action='store', choices=['alpha', 'amazon', 'epinions', 'otc'], help='target dataset')
+    parser.add_argument('-i', '--index', action='store', nargs=2, help='start and end index of target product')
+    parser.add_argument('-c', '--clean', action='store_true', help='clean up the qjobs and outputs')
     parsed = parser.parse_args(sys.argv[1:])
     
     print(parsed)
+
+    if parsed.clean:
+        print('cleanup qjobs')
+        subprocess.run(['rm', '-vf', '*.qjobs'])
+        print('cleanup outputs')
+        subprocess.run(['rm', '-vf', '*.o*'])
+        subprocess.run(['rm', '-vf', '*.po*'])
+        exit()
     
     step = 10
     d = parsed.data
