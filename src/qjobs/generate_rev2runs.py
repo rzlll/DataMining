@@ -14,13 +14,13 @@ sample_script_rev2 = '''
 #$ -j y
 
 # Set memory request:
-#$ -l vf=30G
+#$ -l vf=20G
 
 # ironfs access
-##$ -l ironfs
+# -l ironfs
 
 # number of processes (cores)
-##$ -pe smp 8
+# -pe smp 8
 
 # Set walltime request:
 #$ -l h_rt=3:59:59
