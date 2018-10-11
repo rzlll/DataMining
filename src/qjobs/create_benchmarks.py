@@ -40,7 +40,7 @@ if [ ! -d $OUTPUT_DIR ]; then
     mkdir -p $OUTPUT_DIR
 fi
 
-python algs/$algorithm $data $k $N $ind
+python algs/$algorithm $data $k $n $ind
 
 wait
 # done
@@ -79,6 +79,6 @@ if __name__ == '__main__':
         for n in n_range:
             for ind in range(50):
                 qjob_name = '%s-%s-%d-%d-%d.qjob' %(parsed.alg, parsed.data, k, n, ind)
-                script = template.replace('$data', parsed.data).replace('$k', str(k)).replace('$N', str(n)).replace('$algorithm', parsed.alg).replace('$ind', str(ind))
+                script = template.replace('$data', parsed.data).replace('$k', str(k)).replace('$n', str(n)).replace('$algorithm', parsed.alg).replace('$ind', str(ind))
                 with open(os.path.join(parsed.alg, qjob_name), 'w') as fp:
                     fp.write(script)
