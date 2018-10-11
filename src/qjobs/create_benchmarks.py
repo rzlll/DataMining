@@ -40,7 +40,7 @@ if [ ! -d $OUTPUT_DIR ]; then
     mkdir -p $OUTPUT_DIR
 fi
 
-python algs/$algorithm $data $k $n $ind
+python algs/$algorithm.py $data $k $n $ind
 
 wait
 # done
