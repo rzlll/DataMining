@@ -33,7 +33,7 @@ products = {n: graph.new_product(n) for n in G.node if n.startswith('p')}
 for e in G.edges:
     graph.add_review(reviewers[e[0]], products[e[1]], G.edges[e]['weight'])
 
-for it in range(20):
+for it in range(15):
     diff = graph.update()
     print('iter %d, diff %.2f' %(it, diff))
     if diff < 1e-3:
