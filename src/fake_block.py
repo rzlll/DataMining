@@ -78,12 +78,13 @@ def generate_sockpuppets(base_index=0, num=1):
     return socks
 
 np.random.seed(79)
-def generate_reviews(user, prod, prod_list, num):
+def generate_reviews(user, prod, prod_list, num=1):
+    assert num > 0
     fr = rating_max
     if rating_dict[prod] > 0:
         fr = rating_min
     reviews = [[user, prod, fr, ts_max]]
-    fr_prods = np.random.permutation(prod_list)[:num]
+    fr_prods = np.random.permutation(prod_list)[:num-1]
     reviews += [[user, p, np.clip(np.random.normal(rating_dict[p], std_dict[p], 1)[0], a_min=rating_min, a_max=rating_max), pd.datetime.today()] for p in fr_prods]
     return reviews
 
