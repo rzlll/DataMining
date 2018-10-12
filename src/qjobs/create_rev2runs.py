@@ -13,7 +13,7 @@ template = '''
 #$ -j y
 
 # Set memory request:
-#$ -l vf=5G
+#$ -l vf=4G
 
 # ironfs access
 ###$ -l ironfs
