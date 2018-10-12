@@ -8,7 +8,7 @@ template = '''
 #!/usr/bin/env bash
 
 # The name of the job, can be anything, simply used when displaying the list of running jobs
-#$ -N $algorithm-$data-$k-$n-$ind
+#$ -N rev2-$data-$k-$n-$ind
 # Combining output/error messages into one file
 #$ -j y
 
