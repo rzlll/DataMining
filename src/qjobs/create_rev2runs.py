@@ -41,11 +41,11 @@ if [ ! -d $OUTPUT_DIR ]; then
     mkdir -p $OUTPUT_DIR
 fi
 
-python algs/rev2run.py $data 1 1 1 1 1 1 0 10 $k $N $ind
-python algs/rev2run.py $data 1 2 1 1 1 1 0 10 $k $N $ind
-python algs/rev2run.py $data 1 1 2 1 1 1 0 10 $k $N $ind
-python algs/rev2run.py $data 1 1 1 2 1 1 0 10 $k $N $ind
-python algs/rev2run.py $data 1 1 1 1 2 1 0 10 $k $N $ind
+python algs/rev2run.py $data 1 1 1 1 1 1 0 10 $k $n $ind
+python algs/rev2run.py $data 1 2 1 1 1 1 0 10 $k $n $ind
+python algs/rev2run.py $data 1 1 2 1 1 1 0 10 $k $n $ind
+python algs/rev2run.py $data 1 1 1 2 1 1 0 10 $k $n $ind
+python algs/rev2run.py $data 1 1 1 1 2 1 0 10 $k $n $ind
 
 wait
 # done
