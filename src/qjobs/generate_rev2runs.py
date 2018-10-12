@@ -72,8 +72,8 @@ if __name__ == '__main__':
         print(proc_ret)
         exit()
     
-    step = 13
-    d = parsed.data
+    n_range = list(range(0, 51, 5))
+    n_range[0] = 1
 
     if not os.path.exists(parsed.alg):
         os.mkdir(parsed.alg)
@@ -83,7 +83,7 @@ if __name__ == '__main__':
     for k in range(10):
         for n in n_range:
             for ind in range(50):
-                qjob_name = 'rev2run-%s-%d-%d-%d.qjob' %(d, k, n, ind)
-                tmp = sample_script_rev2.replace('$k', str(k)).replace('$n', str(n)).replace('$data', d).replace('$ind', str(inds))
+                qjob_name = 'rev2run-%s-%d-%d-%d.qjob' %(parsed.data, k, n, ind)
+                tmp = template.replace('$k', str(k)).replace('$n', str(n)).replace('$data', parsed.data).replace('$ind', str(inds))
                 with open(qjob_name, 'w') as f:
                     f.write(tmp)
