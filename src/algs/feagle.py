@@ -20,7 +20,7 @@ exec(open('fake_block.py', 'r').read())
 
 outfile = '../res/feagle/%s/%s-%d-%d-%d.csv' %(data_name, data_name, k, N, ind)
 
-epsilon = 0.15
+epsilon = 0.25
 graph = feagle.ReviewGraph(epsilon)
 
 reviewers = {n: graph.new_reviewer(n) for n in G.node if n.startswith('u')}
