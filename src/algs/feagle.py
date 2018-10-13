@@ -20,7 +20,7 @@ exec(open('fake_block.py', 'r').read())
 
 outfile = '../res/feagle/%s/%s-%d-%d-%d.csv' %(data_name, data_name, k, N, ind)
 
-epsilon = 0.25
+epsilon = 0.15
 graph = feagle.ReviewGraph(epsilon)
 
 reviewers = {n: graph.new_reviewer(n) for n in G.node if n.startswith('u')}
@@ -29,7 +29,7 @@ products = {n: graph.new_product(n) for n in G.node if n.startswith('p')}
 for e in G.edges:
     graph.add_review(reviewers[e[0]], products[e[1]], G.edges[e]['weight'])
 
-for it in range(10):
+for it in range(5):
     diff = graph.update()
     print('iter %d, diff %.2f' %(it, diff))
     if diff < 1e-3:
