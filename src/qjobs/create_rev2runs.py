@@ -13,7 +13,7 @@ template = '''
 #$ -j y
 
 # Set memory request:
-#$ -l vf=4G
+#$ -l vf=2G
 
 # ironfs access
 ###$ -l ironfs
@@ -22,7 +22,7 @@ template = '''
 ### -pe smp 8
 
 # Set walltime request:
-#$ -l h_rt=0:29:59
+#$ -l h_rt=2:59:59
 
 # One needs to tell the queue system to use the current directory as the working directory
 # Or else the script may fail as it will execute in your top level home directory /home/username

@@ -7,12 +7,12 @@ template = '''
 #!/usr/bin/env bash
 
 # The name of the job, can be anything, simply used when displaying the list of running jobs
-#$ -N $algorithm-$data-$k-$n-$ind
+#$ -N $algorithm-$data
 # Combining output/error messages into one file
 #$ -j y
 
 # Set memory request:
-#$ -l vf=2G
+#$ -l vf=5G
 
 # ironfs access
 ###$ -l ironfs
@@ -21,7 +21,7 @@ template = '''
 ### -pe smp 8
 
 # Set walltime request:
-#$ -l h_rt=2:59:59
+#$ -l h_rt=0:29:59
 
 # One needs to tell the queue system to use the current directory as the working directory
 # Or else the script may fail as it will execute in your top level home directory /home/username
@@ -40,7 +40,7 @@ if [ ! -d $OUTPUT_DIR ]; then
     mkdir -p $OUTPUT_DIR
 fi
 
-python algs/$algorithm.py $data $k $n $ind
+python eval_alg.py -a $algorithm -d $data
 
 wait
 # done
@@ -49,16 +49,16 @@ exit 0
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='create qjobs')
-    parser.add_argument('-d', '--data', action='store', choices=['alpha', 'amazon', 'epinions', 'otc'], default='alpha', help='target dataset')
+    # parser.add_argument('-d', '--data', action='store', choices=['alpha', 'amazon', 'epinions', 'otc'], default='alpha', help='target dataset')
     parser.add_argument('-c', '--clean', action='store_true', help='clean up the qjobs and outputs')
-    parser.add_argument('-a', '--alg', action='store', choices=['bn', 'feagle', 'fraudar', 'trust', 'rsd', 'bad'], default='bn', help='algorithm')
+    # parser.add_argument('-a', '--alg', action='store', choices=['bn', 'feagle', 'fraudar', 'trust', 'rsd', 'bad'], default='bn', help='algorithm')
     parsed = parser.parse_args(sys.argv[1:])
     
     print(parsed)
 
     if parsed.clean:
         print('cleanup configs and qjobs')
-        proc_ret = subprocess.run('rm -vf *.json', shell=True)
+        proc_ret = subprocess.run('rm -rf evals', shell=True)
         print(proc_ret)
         proc_ret = subprocess.run('rm -vf *.qjob', shell=True)
         print(proc_ret)
@@ -72,15 +72,12 @@ if __name__ == '__main__':
     n_range = list(range(0, 51, 5))
     n_range[0] = 1
 
-    if not os.path.exists(parsed.alg):
-        os.mkdir(parsed.alg)
-    if not os.path.exists(os.path.join(parsed.alg, parsed.data)):
-        os.mkdir(os.path.join(parsed.alg, parsed.data))
+    if not os.path.exists('evals'):
+        os.mkdir('evals')
 
-    for k in range(10):
-        for n in n_range:
-            for ind in range(50):
-                qjob_name = '%s-%s-%d-%d-%d.qjob' %(parsed.alg, parsed.data, k, n, ind)
-                script = template.replace('$data', parsed.data).replace('$k', str(k)).replace('$n', str(n)).replace('$algorithm', parsed.alg).replace('$ind', str(ind))
-                with open(os.path.join(parsed.alg, parsed.data, qjob_name), 'w') as fp:
+    for alg in ['bn', 'feagle', 'fraudar', 'trust', 'rsd', 'bad']:
+        for data in ['alpha', 'amazon', 'epinions', 'otc']:
+                qjob_name = '%s-%s.qjob' %(alg, data)
+                script = template.replace('$data', data).replace('$algorithm', alg)
+                with open(os.path.join('evals', qjob_name), 'w') as fp:
                     fp.write(script)
