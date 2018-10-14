@@ -4,7 +4,9 @@ import os, sys, argparse
 import numpy as np
 import pandas as pd
 
+import numba
 import sklearn
+import sklearn.metrics
 
 import time, datetime
 import itertools
@@ -86,14 +88,15 @@ def compute_metrics(res_dict, k, n, ind):
 n_range = list(range(0, 51, 5))
 n_range[0] = 1
 
-results_list = Parallel(n_jobs=n_cores, verbose=5)(delayed(compute_score)(k, n, ind) for k, n, ind in itertools.product(range(11), n_range, range(50)))
+print('retrieve the results')
+results_list = Parallel(n_jobs=n_cores, verbose=5, backend='loky')(delayed(compute_score)(k, n, ind) for k, n, ind in itertools.product(range(10), n_range, range(50)))
+results_dict = dict(zip(itertools.product(range(10), n_range, range(50)), results_list))
 
-results_dict = dict(zip(itertools.product(range(11), n_range, range(50)), results_list))
+print('compute the metrics')
+metrics_list = Parallel(n_jobs=n_cores, verbose=5, backend='loky')(delayed(compute_metrics)(results_dict, k, n, ind) for k, n, ind in itertools.product(range(10), n_range, range(50)))
+metrics_dict = dict(zip(itertools.product(range(10), n_range, range(50)), metrics_list))
 
-metrics_list = Parallel(n_jobs=n_cores, verbose=5)(delayed(compute_metrics)(alg_name, k, n, ind) for k, n, ind in itertools.product(range(11), n_range, range(50)))
-
-metrics_dict = dict(zip(itertools.product(range(11), n_range, range(50)), metrics_list))
-
+print('save the pickles')
 with open('../res/%s/res-%s.pkl' %(alg_name, data_name), 'wb') as f:
     pickle.dump(results_dict, f)
 
