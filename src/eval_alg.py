@@ -21,7 +21,7 @@ parsed = parser.parse_args(sys.argv[1:])
 
 if not os.path.exists('../res/%s/%s' %(parsed.alg, parsed.data)):
     print('no results for %s %s' %(parsed.alg, parsed.data))
-    return -1
+    exit(-1)
 
 data_name = parsed.data
 alg_name = parsed.alg
