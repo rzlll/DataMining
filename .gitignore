@@ -11,6 +11,7 @@ figures
 
 # result files
 res
+res.tar.gz
 
 #pickles
 *.pkl
