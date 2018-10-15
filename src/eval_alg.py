@@ -19,6 +19,10 @@ parser.add_argument('-a', '--alg', type=str, default='bad', choices=['bn', 'feag
 parser.add_argument('-n', '--ncores', type=int, default=-1, help='number of cores to use')
 parsed = parser.parse_args(sys.argv[1:])
 
+if not os.path.exists('../res/%s/%s' %(parsed.alg, parsed.data)):
+    print('no results for %s %s' %(parsed.alg, parsed.data))
+    return -1
+
 data_name = parsed.data
 alg_name = parsed.alg
 n_cores = parsed.ncores
