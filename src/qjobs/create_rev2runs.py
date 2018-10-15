@@ -36,7 +36,7 @@ template = '''
 source $HOME/venv/bin/activate
 cd $HOME/research/fake-review/src
 
-OUTPUT_DIR="../res/$algorithm/$data/"
+OUTPUT_DIR="../res/rev2/$data/"
 if [ ! -d $OUTPUT_DIR ]; then
     mkdir -p $OUTPUT_DIR
 fi
