@@ -15,7 +15,7 @@ import pickle
 
 parser = argparse.ArgumentParser(description='evaluate algorithms with data')
 parser.add_argument('-d', '--data', type=str, default='alpha', choices=['alpha', 'amazon', 'epinions', 'otc'], help='data name')
-parser.add_argument('-a', '--alg', type=str, default='bad', choices=['bn', 'feagle', 'fraudar', 'trust', 'rsd', 'bad'], help='alg name')
+parser.add_argument('-a', '--alg', type=str, default='bad', choices=['bn', 'feagle', 'fraudar', 'trust', 'rsd', 'bad', 'rev2'], help='alg name')
 parser.add_argument('-n', '--ncores', type=int, default=-1, help='number of cores to use')
 parsed = parser.parse_args(sys.argv[1:])
 
@@ -44,17 +44,34 @@ def parse_data(df):
     return pd.DataFrame(sortedret)
 
 def compute_score(k=0, n=0, ind=0):
-    if alg_name == 'rev2':
-        results_df = pd.read_csv('../res/%s/%s/%s-1-1-1-1-1-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)
-    else:
-        results_df = pd.read_csv('../res/%s/%s/%s-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)
-    if len(results_df.columns) < 3: results_df = parse_data(results_df)
     # if user is good in ground truth output 0
     # if user is fraudster in ground truth output 1
     # if user is sockpuppet output 2
-    ytrue = [0 if t==1 else 1 for t in results_df[0].tolist()]
-    ulist = results_df[1].tolist()
-    yscore = results_df[2].tolist()
+    
+    if alg_name == 'rev2':
+        results_df = pd.read_csv('../res/%s/%s/%s-1-1-1-1-1-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)
+        ulist = results_df[1].tolist()
+        ytrue = [0 if t==1 else 1 for t in results_df[0].tolist()]
+        u_sum = {u: 0 for u in ulist}
+        flist = [
+            '../res/%s/%s/%s-1-1-1-1-1-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind),
+            '../res/%s/%s/%s-1-2-1-1-1-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind),
+            '../res/%s/%s/%s-1-1-2-1-1-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind),
+            '../res/%s/%s/%s-1-1-1-2-1-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind),
+            '../res/%s/%s/%s-1-1-1-1-2-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind)
+        ]
+        for f in flist:
+            try:
+                try_df = pd.read_csv(f, header=None)
+                s = dict(zip(try_df[1].tolist(), try_df[2].tolist()))
+                for u in u_sum:
+                    u_sum[u] += s[u]
+        yscore = [u_sum[u] for u in u_sum]
+    else:
+        results_df = pd.read_csv('../res/%s/%s/%s-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)
+        ytrue = [0 if t==1 else 1 for t in results_df[0].tolist()]
+        ulist = results_df[1].tolist()
+        yscore = results_df[2].tolist()
     return {'ulist': ulist, 'ytrue': ytrue, 'yscore': yscore}
 
 @numba.jit

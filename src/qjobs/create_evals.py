@@ -75,7 +75,7 @@ if __name__ == '__main__':
     if not os.path.exists('evals'):
         os.mkdir('evals')
 
-    for alg in ['bn', 'feagle', 'fraudar', 'trust', 'rsd', 'bad']:
+    for alg in ['bn', 'feagle', 'fraudar', 'trust', 'rsd', 'bad', 'rev2']:
         for data in ['alpha', 'amazon', 'epinions', 'otc']:
                 qjob_name = '%s-%s.qjob' %(alg, data)
                 script = template.replace('$data', data).replace('$algorithm', alg)
