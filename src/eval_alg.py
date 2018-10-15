@@ -16,7 +16,7 @@ import pickle
 parser = argparse.ArgumentParser(description='evaluate algorithms with data')
 parser.add_argument('-d', '--data', type=str, default='alpha', choices=['alpha', 'amazon', 'epinions', 'otc'], help='data name')
 parser.add_argument('-a', '--alg', type=str, default='bad', choices=['bn', 'feagle', 'fraudar', 'trust', 'rsd', 'bad', 'rev2'], help='alg name')
-parser.add_argument('-n', '--ncores', type=int, default=-1, help='number of cores to use')
+parser.add_argument('-n', '--ncores', type=int, default=1, help='number of cores to use')
 parsed = parser.parse_args(sys.argv[1:])
 
 if not os.path.exists('../res/%s/%s' %(parsed.alg, parsed.data)):
