@@ -70,6 +70,8 @@ def compute_score(k=0, n=0, ind=0):
                 s = dict(zip(try_df[1].tolist(), try_df[2].tolist()))
                 for u in u_sum:
                     u_sum[u] += s[u]
+            except:
+                pass
         yscore = [u_sum[u] for u in u_sum]
     else:
         results_df = pd.read_csv('../res/%s/%s/%s-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)
