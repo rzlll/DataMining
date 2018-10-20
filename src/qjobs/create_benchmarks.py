@@ -81,7 +81,7 @@ if __name__ == '__main__':
         for n in n_range:
             for ind in range(50):
                 qjob_name = '%s-%s-%d-%d-%d.qjob' %(parsed.alg, parsed.data, k, n, ind)
-                target_path = '../res/%s/%s/%s-%d-%d-%d.csv' %(parsed.alg, parsed.data, parsed.data, k, n, ind)
+                target_path = '../../res/%s/%s/%s-%d-%d-%d.csv' %(parsed.alg, parsed.data, parsed.data, k, n, ind)
                 if os.path.exists(target_path):
                     print(target_path, 'exists')
                     continue
