@@ -77,14 +77,21 @@ if __name__ == '__main__':
     if not os.path.exists(os.path.join(parsed.alg, parsed.data)):
         os.mkdir(os.path.join(parsed.alg, parsed.data))
 
+    create_list = []
+    skip_list = []
     for k in range(10):
         for n in n_range:
             for ind in range(50):
                 qjob_name = '%s-%s-%d-%d-%d.qjob' %(parsed.alg, parsed.data, k, n, ind)
                 target_path = '../../res/%s/%s/%s-%d-%d-%d.csv' %(parsed.alg, parsed.data, parsed.data, k, n, ind)
                 if os.path.exists(target_path):
-                    print(target_path, 'exists')
+                    skip_list.append(target_path)
                     continue
                 script = template.replace('$data', parsed.data).replace('$k', str(k)).replace('$n', str(n)).replace('$algorithm', parsed.alg).replace('$ind', str(ind))
                 with open(os.path.join(parsed.alg, parsed.data, qjob_name), 'w') as fp:
                     fp.write(script)
+                create_list.append(target_path)
+    print('skip', len(skip_list))
+    print('show 10', skip_list[-10:])
+    print('create', len(create_list))
+    print('show 10', create_list[-10:])
