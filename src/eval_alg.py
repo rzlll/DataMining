@@ -83,7 +83,7 @@ def compute_score(k=0, n=0, ind=0):
 @numba.jit
 def get_metrics(ytrue, yscore):
     '''get precision and recall at q percentile'''
-    q = np.array([0.01, 0.03, 0.05, 0.1])
+    q = np.array([0.005, 0.01, 0.03, 0.05, 0.1])
 
     assert len(ytrue) == len(yscore)
     size = len(ytrue)
