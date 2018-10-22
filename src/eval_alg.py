@@ -121,7 +121,7 @@ n_range[0] = 1
 # metrics_dict = dict(zip(itertools.product(range(10), n_range, range(50)), metrics_list))
 
 print('retrieve results and compute the metrics')
-for k, n, ind in itertools.product(range(10), n_range, range(50)):
+for k, n, d in itertools.product(range(10), n_range, range(50)):
     results_dict[(k, n, d)] = compute_score(k, n, d)
     metrics_dict[(k, n, d)] = compute_metrics(results_dict, k, n, d)
 
