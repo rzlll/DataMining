@@ -120,6 +120,9 @@ n_range[0] = 1
 # metrics_list = Parallel(n_jobs=n_cores, verbose=5, backend='loky')(delayed(compute_metrics)(results_dict, k, n, ind) for k, n, ind in itertools.product(range(10), n_range, range(50)))
 # metrics_dict = dict(zip(itertools.product(range(10), n_range, range(50)), metrics_list))
 
+results_dict = {}
+metrics_dict = {}
+
 print('retrieve results and compute the metrics')
 for k, n, d in itertools.product(range(10), n_range, range(50)):
     results_dict[(k, n, d)] = compute_score(k, n, d)
