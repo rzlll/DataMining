@@ -16,7 +16,7 @@ import pickle
 parser = argparse.ArgumentParser(description='evaluate algorithms with data')
 parser.add_argument('-d', '--data', type=str, default='alpha', choices=['alpha', 'amazon', 'epinions', 'otc'], help='data name')
 parser.add_argument('-a', '--alg', type=str, default='bad', choices=['bn', 'feagle', 'fraudar', 'trust', 'rsd', 'bad', 'rev2'], help='alg name')
-parser.add_argument('-n', '--ncores', type=int, default=1, help='number of cores to use')
+parser.add_argument('-n', '--ncores', type=int, default=1, help='number of cores to use (disabled after using numba)')
 parsed = parser.parse_args(sys.argv[1:])
 
 if not os.path.exists('../res/%s/%s' %(parsed.alg, parsed.data)):
@@ -111,13 +111,19 @@ def compute_metrics(res_dict, k, n, ind):
 n_range = list(range(0, 51, 5))
 n_range[0] = 1
 
-print('retrieve the results')
-results_list = Parallel(n_jobs=n_cores, verbose=5, backend='loky')(delayed(compute_score)(k, n, ind) for k, n, ind in itertools.product(range(10), n_range, range(50)))
-results_dict = dict(zip(itertools.product(range(10), n_range, range(50)), results_list))
+# print('retrieve the results')
+# results_list = Parallel(n_jobs=n_cores, verbose=5, backend='loky')(delayed(compute_score)(k, n, ind) for k, n, ind in itertools.product(range(10), n_range, range(50)))
+# results_dict = dict(zip(itertools.product(range(10), n_range, range(50)), results_list))
 
-print('compute the metrics')
-metrics_list = Parallel(n_jobs=n_cores, verbose=5, backend='loky')(delayed(compute_metrics)(results_dict, k, n, ind) for k, n, ind in itertools.product(range(10), n_range, range(50)))
-metrics_dict = dict(zip(itertools.product(range(10), n_range, range(50)), metrics_list))
+
+# print('compute the metrics')
+# metrics_list = Parallel(n_jobs=n_cores, verbose=5, backend='loky')(delayed(compute_metrics)(results_dict, k, n, ind) for k, n, ind in itertools.product(range(10), n_range, range(50)))
+# metrics_dict = dict(zip(itertools.product(range(10), n_range, range(50)), metrics_list))
+
+print('retrieve results and compute the metrics')
+for k, n, ind in itertools.product(range(10), n_range, range(50)):
+    results_dict[(k, n, d)] = compute_score(k, n, d)
+    metrics_dict[(k, n, d)] = compute_metrics(results_dict, k, n, d)
 
 print('save the pickles')
 with open('../res/%s/res-%s.pkl' %(alg_name, data_name), 'wb') as f:
