@@ -12,7 +12,7 @@ template = '''
 #$ -j y
 
 # Set memory request:
-#$ -l vf=10G
+#$ -l vf=$vf
 
 # ironfs access
 ###$ -l ironfs
@@ -21,7 +21,7 @@ template = '''
 ### -pe smp 8
 
 # Set walltime request:
-#$ -l h_rt=4:59:59
+#$ -l h_rt=5:59:59
 
 # One needs to tell the queue system to use the current directory as the working directory
 # Or else the script may fail as it will execute in your top level home directory /home/username
@@ -91,7 +91,12 @@ if __name__ == '__main__':
                 if os.path.exists(target_path):
                     skip_list.append(target_path)
                     continue
-                script = template.replace('$data', parsed.data).replace('$k', str(k)).replace('$n', str(n)).replace('$algorithm', parsed.alg).replace('$ind', str(ind))
+                # epinions is large
+                if parsed.data == 'epinions':
+                    script = template.replace('$data', parsed.data).replace('$k', str(k)).replace('$n', str(n)).replace('$algorithm', parsed.alg).replace('$ind', str(ind)).replace('$vf', '20G')
+                else:
+                    script = template.replace('$data', parsed.data).replace('$k', str(k)).replace('$n', str(n)).replace('$algorithm', parsed.alg).replace('$ind', str(ind)).replace('$vf', '10G')
+
                 with open(os.path.join(parsed.alg, parsed.data, qjob_name), 'w') as fp:
                     fp.write(script)
                 create_list.append(target_path)
