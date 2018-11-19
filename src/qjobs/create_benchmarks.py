@@ -28,7 +28,7 @@ template = '''
 
 # the cwd is somehow causing problems
 ####$ -cwd
-#$ -wd /home/ifsdata/scratch/rliu/qlog/
+#$ -wd $HOME/research/fake-review/src/qjobs/$algorithm/
 
 # then you tell it retain all environment variables (as the default is to scrub your environment)
 ####$ -V
