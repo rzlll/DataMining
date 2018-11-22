@@ -58,7 +58,7 @@ dr = 0
 dt = 0
 dh = 0
     
-while iter_idx < 10:
+while iter_idx < 5:
     print("-----\niter: ", iter_idx)
     
     print(dr, dt, dh)
