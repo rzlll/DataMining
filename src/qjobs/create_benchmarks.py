@@ -21,7 +21,7 @@ template = '''
 ### -pe smp 8
 
 # Set walltime request:
-#$ -l h_rt=9:59:59
+#$ -l h_rt=$time
 
 # One needs to tell the queue system to use the current directory as the working directory
 # Or else the script may fail as it will execute in your top level home directory /home/username
@@ -93,9 +93,9 @@ if __name__ == '__main__':
                     continue
                 # epinions is large
                 if parsed.data == 'epinions':
-                    script = template.replace('$data', parsed.data).replace('$k', str(k)).replace('$n', str(n)).replace('$algorithm', parsed.alg).replace('$ind', str(ind)).replace('$vf', '20G')
+                    script = template.replace('$data', parsed.data).replace('$k', str(k)).replace('$n', str(n)).replace('$algorithm', parsed.alg).replace('$ind', str(ind)).replace('$vf', '20G').replace('$time', '9:59:59')
                 else:
-                    script = template.replace('$data', parsed.data).replace('$k', str(k)).replace('$n', str(n)).replace('$algorithm', parsed.alg).replace('$ind', str(ind)).replace('$vf', '10G')
+                    script = template.replace('$data', parsed.data).replace('$k', str(k)).replace('$n', str(n)).replace('$algorithm', parsed.alg).replace('$ind', str(ind)).replace('$vf', '10G').replace('$time', '23:59:59')
 
                 with open(os.path.join(parsed.alg, parsed.data, qjob_name), 'w') as fp:
                     fp.write(script)
