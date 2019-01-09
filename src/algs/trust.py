@@ -58,7 +58,7 @@ dr = 0
 dt = 0
 dh = 0
     
-while iter_idx < 20:
+while iter_idx < 3:
     print("-----\niter: ", iter_idx)
     
     print(dr, dt, dh)
@@ -74,8 +74,6 @@ while iter_idx < 20:
     for edge in edges:
         # calc_agreement
         cnt += 1
-        if cnt % 1000 == 0:
-            print(cnt)
         t_agr = 0
         t_dis = 0
         iedges = G.in_edges(edge[1], data=True)

@@ -74,7 +74,10 @@ def compute_score(k=0, n=0, ind=0):
                 pass
         yscore = [u_sum[u] for u in u_sum]
     else:
-        results_df = pd.read_csv('../res/%s/%s/%s-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)
+        try:
+            results_df = pd.read_csv('../res/%s/%s/%s-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)
+        except:
+            return None
         ytrue = [0 if t==1 else 1 for t in results_df[0].tolist()]
         ulist = results_df[1].tolist()
         yscore = results_df[2].tolist()
@@ -111,22 +114,16 @@ def compute_metrics(res_dict, k, n, ind):
 n_range = list(range(0, 51, 5))
 n_range[0] = 1
 
-# print('retrieve the results')
-# results_list = Parallel(n_jobs=n_cores, verbose=5, backend='loky')(delayed(compute_score)(k, n, ind) for k, n, ind in itertools.product(range(10), n_range, range(50)))
-# results_dict = dict(zip(itertools.product(range(10), n_range, range(50)), results_list))
-
-
-# print('compute the metrics')
-# metrics_list = Parallel(n_jobs=n_cores, verbose=5, backend='loky')(delayed(compute_metrics)(results_dict, k, n, ind) for k, n, ind in itertools.product(range(10), n_range, range(50)))
-# metrics_dict = dict(zip(itertools.product(range(10), n_range, range(50)), metrics_list))
-
 results_dict = {}
 metrics_dict = {}
 
 print('retrieve results and compute the metrics')
 for k, n, d in itertools.product(range(10), n_range, range(50)):
     results_dict[(k, n, d)] = compute_score(k, n, d)
-    metrics_dict[(k, n, d)] = compute_metrics(results_dict, k, n, d)
+    if results_dict[(k, n, d)] != None:
+        metrics_dict[(k, n, d)] = compute_metrics(results_dict, k, n, d)
+    else:
+        metrics_dict[(k, n, d)] = None
 
 print('save the pickles')
 with open('../res/%s/res-%s.pkl' %(alg_name, data_name), 'wb') as f:
