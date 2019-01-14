@@ -13,7 +13,7 @@ template = '''
 #$ -j y
 
 # Set memory request:
-#$ -l vf=2G
+#$ -l vf=$vf
 
 # ironfs access
 ###$ -l ironfs
@@ -22,11 +22,12 @@ template = '''
 ### -pe smp 8
 
 # Set walltime request:
-#$ -l h_rt=2:59:59
+#$ -l h_rt=10:59:59
 
 # One needs to tell the queue system to use the current directory as the working directory
 # Or else the script may fail as it will execute in your top level home directory /home/username
-#$ -cwd
+###$ -cwd
+#$ -wd /home/ifsdata/scratch/rliu/qlog/
 # then you tell it retain all environment variables (as the default is to scrub your environment)
 ####$ -V
 # Now comes the command to be executed
@@ -84,6 +85,9 @@ if __name__ == '__main__':
         for n in n_range:
             for ind in range(50):
                 qjob_name = 'rev2run-%s-%d-%d-%d.qjob' %(parsed.data, k, n, ind)
-                script = template.replace('$k', str(k)).replace('$n', str(n)).replace('$data', parsed.data).replace('$ind', str(ind))
+                if parsed.data == 'epinions':
+                    script = template.replace('$k', str(k)).replace('$n', str(n)).replace('$data', parsed.data).replace('$ind', str(ind)).replace('$vf', '20G')
+                else:
+                    script = template.replace('$k', str(k)).replace('$n', str(n)).replace('$data', parsed.data).replace('$ind', str(ind)).replace('$vf', '10G')
                 with open(os.path.join(parsed.alg, parsed.data, qjob_name), 'w') as f:
                     f.write(script)
