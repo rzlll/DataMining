@@ -79,5 +79,5 @@ if __name__ == '__main__':
         for data in ['alpha', 'amazon', 'epinions', 'otc']:
                 qjob_name = '%s-%s.qjob' %(alg, data)
                 script = template.replace('$data', data).replace('$algorithm', alg)
-                with open(os.path.join('evals', qjob_name), 'w') as fp:
+                with open(os.path.join('budget', qjob_name), 'w') as fp:
                     fp.write(script)
