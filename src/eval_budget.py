@@ -171,6 +171,8 @@ print('retrieve results and compute the metrics')
 for k, n, d in itertools.product(range(10), n_range, range(50)):
     if (k, n, d) in eligible_bugets:
         results_dict[(k, n, d)] = compute_score(k, n, d)
+    else:
+        results_dict[(k, n, d)] = None
 
     if results_dict[(k, n, d)] != None:
         metrics_dict[(k, n, d)] = compute_metrics(results_dict, k, n, d)
