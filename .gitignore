@@ -1,4 +1,5 @@
 .DS_Store
+.idea
 
 # jupyter notebook cache
 .ipynb_checkpoints
