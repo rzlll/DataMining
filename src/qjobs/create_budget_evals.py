@@ -73,7 +73,7 @@ if __name__ == '__main__':
     n_range[0] = 1
 
     if not os.path.exists('budget'):
-        os.mkdir('evals')
+        os.mkdir('budget')
 
     for alg in ['bn', 'feagle', 'fraudar', 'trust', 'rsd', 'bad', 'rev2']:
         for data in ['alpha', 'amazon', 'epinions', 'otc']:
