@@ -58,7 +58,7 @@ if __name__ == '__main__':
 
     if parsed.clean:
         print('cleanup configs and qjobs')
-        proc_ret = subprocess.run('rm -rf evals', shell=True)
+        proc_ret = subprocess.run('rm -rf budget', shell=True)
         print(proc_ret)
         proc_ret = subprocess.run('rm -vf *.qjob', shell=True)
         print(proc_ret)
