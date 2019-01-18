@@ -178,7 +178,8 @@ for k, n, d in itertools.product(range(10), n_range, range(50)):
 
     if results_dict[(k, n, d)] != None:
         metrics_dict[(k, n, d)] = compute_metrics(results_dict, k, n, d)
-        eligible_kn.add((k, n))
+        if k > 0:
+            eligible_kn.add((k, n))
     else:
         metrics_dict[(k, n, d)] = None
 
