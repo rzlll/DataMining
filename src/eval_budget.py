@@ -84,7 +84,7 @@ T_index = np.random.permutation(len(target_pool))[d_list]
 
 # compute the bugets pairs
 
-ccost_budegt_eligibles = {}
+ccost_budget_eligibles = {}
 
 for ccost, budget in ccost_budget_pairs:
     eligible_budgets = []
@@ -179,10 +179,10 @@ for ccost, budget in ccost_budget_pairs:
     results_dict = {}
     metrics_dict = {}
     
-    eligible_bugets = ccost_budget_eligibles[(ccost, budget)]
+    eligible_budgets = ccost_budget_eligibles[(ccost, budget)]
     eligible_kn = set()
     for k, n, d in itertools.product(range(10), n_range, range(50)):
-        if (k, n, d) in eligible_bugets:
+        if (k, n, d) in eligible_budgets:
             results_dict[(k, n, d)] = compute_score(k, n, d)
         else:
             results_dict[(k, n, d)] = None
