@@ -8,9 +8,9 @@ import numba
 import sklearn
 import sklearn.metrics
 
-import time, datetime
+# import time, datetime
 import itertools
-from joblib import Parallel, delayed
+# from joblib import Parallel, delayed
 import pickle
 
 parser = argparse.ArgumentParser(description='evaluate algorithms with data')
@@ -21,8 +21,7 @@ parser.add_argument('-a', '--alg', type=str, default='bad',
 parser.add_argument('-n', '--ncores', type=int, default=1, help='number of cores to use (disabled after using numba)')
 
 # for budget model
-parser.add_argument('-c', '--creation', type=int, default=1, help='per creation cost')
-parser.add_argument('-r', '--review', type=int, default=1, help='per review cost')
+parser.add_argument('-c', '--cost', type=int, default=1, help='cost')
 parser.add_argument('-b', '--budget', type=int, default=1, help='total budget')
 
 parsed = parser.parse_args(sys.argv[1:])
@@ -35,12 +34,11 @@ data_name = parsed.data
 alg_name = parsed.alg
 n_cores = parsed.ncores
 
-ccost = parsed.creation
-rcost = parsed.review
+ccost = parsed.cost
 budget = parsed.budget
 
 print(alg_name, data_name)
-print(ccost, rcost, budget)
+print(ccost, budget)
 
 def load_data(data_name):
     data_list = ['alpha', 'amazon', 'epinions', 'otc']
@@ -88,7 +86,7 @@ for k, n in itertools.product(range(10), n_range):
     for i in d_list:
         t = target_pool[i]
         K = int(np.ceil(k * count_dict[t] / 10))
-        sum_cost = ccost * K + rcost * n
+        sum_cost = K * ccost * n
         if sum_cost <= budget:
             eligible_bugets += [(k, n, i)]
 
