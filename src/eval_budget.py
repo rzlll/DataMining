@@ -40,7 +40,7 @@ n_cores = parsed.ncores
 ccost_budget_pairs = [(6, 600), (6.5, 325), (7, 70), (8, 40), (6, 1200), (6, 1000)]
 
 print(alg_name, data_name)
-print(ccost, budget)
+print(ccost_budget_pairs)
 
 def load_data(data_name):
     data_list = ['alpha', 'amazon', 'epinions', 'otc']
