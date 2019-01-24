@@ -87,15 +87,15 @@ T_index = np.random.permutation(len(target_pool))[d_list]
 ccost_budegt_eligibles = {}
 
 for ccost, budget in ccost_budget_pairs:
-    eligible_bugets = []
+    eligible_budgets = []
     for k, n in itertools.product(range(10), n_range):
         for i in d_list:
             t = target_pool[i]
             K = int(np.ceil(k * count_dict[t] / 10))
             sum_cost = K * ccost * n
             if sum_cost <= budget:
-                eligible_bugets += [(k, n, i)]
-    cost_budget_eligibles[(ccost, budget)] = eligible_bugets
+                eligible_budgets += [(k, n, i)]
+    ccost_budget_eligibles[(ccost, budget)] = eligible_budgets
 
 def compute_score(k=0, n=0, ind=0):
     # if user is good in ground truth output 0
@@ -179,7 +179,7 @@ for ccost, budget in ccost_budget_pairs:
     results_dict = {}
     metrics_dict = {}
     
-    eligible_bugets = cost_budget_eligibles[(ccost, budget)]
+    eligible_bugets = ccost_budget_eligibles[(ccost, budget)]
     eligible_kn = set()
     for k, n, d in itertools.product(range(10), n_range, range(50)):
         if (k, n, d) in eligible_bugets:
