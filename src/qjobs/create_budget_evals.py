@@ -40,7 +40,7 @@ if [ ! -d $OUTPUT_DIR ]; then
     mkdir -p $OUTPUT_DIR
 fi
 
-python eval_budget.py -a $algorithm -d $data -c 5 -r 1 -b 100
+python eval_budget.py -a $algorithm -d $data -c 5 -b 100
 
 wait
 # done
