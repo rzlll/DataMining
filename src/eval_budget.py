@@ -103,8 +103,10 @@ def compute_score(k=0, n=0, ind=0):
     # if user is sockpuppet output 2
 
     if alg_name == 'rev2':
-        results_df = pd.read_csv(
-            '../res/%s/%s/%s-1-1-1-1-1-1-0-%d-%d-%d.csv' % (alg_name, data_name, data_name, k, n, ind), header=None)
+        try:
+            results_df = pd.read_csv('../res/%s/%s/%s-1-1-1-1-1-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)
+        except:
+            return None
         ulist = results_df[1].tolist()
         ytrue = [0 if t == 1 else 1 for t in results_df[0].tolist()]
         u_sum = {u: 0 for u in ulist}
