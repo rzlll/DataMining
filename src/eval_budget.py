@@ -165,6 +165,7 @@ def compute_metrics(res_dict, k, n, ind):
     ulist = np.array(res_dict[(k, n, ind)]['ulist'])
     yscore = np.array(res_dict[(k, n, ind)]['yscore'])
     ytrue = np.array(res_dict[(k, n, ind)]['ytrue'])
+    ytrue[ytrue > 1] = 1
     prec_dict, recl_dict, f1_dict = get_metrics(ytrue, yscore)
     return {'prec': prec_dict, 'recl': recl_dict, 'f1': f1_dict}
 
