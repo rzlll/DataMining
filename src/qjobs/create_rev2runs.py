@@ -4,7 +4,7 @@ import sys, os
 import argparse
 import subprocess
 
-template = '''
+anthill_template = '''
 #!/usr/bin/env bash
 
 # The name of the job, can be anything, simply used when displaying the list of running jobs
@@ -53,11 +53,57 @@ wait
 exit 0
 '''
 
+pbs_template = '''
+#!/bin/bash -l
+# declare a name for this job to be my_serial_job
+# it is recommended that this name be kept to 16 characters or less
+#PBS -N $algorithm-$data-$k-$n-$ind
+#PBS -j oe
+#PBS -l mem=$vf
+
+# request the queue (enter the possible names, if omitted, default is the default)
+# this job is going to use the default
+#PBS -q default
+
+# request 1 node
+#PBS -l nodes=1:ppn=1
+
+# request 0 hours and 15 minutes of wall time
+# (Default is 1 hour without this directive)
+#PBS -l walltime=$time
+
+# mail is sent to you when the job starts and when it terminates or aborts 
+####PBS -m bea
+
+# specify your email address 
+####PBS -M John.Smith@dartmouth.edu
+
+# By default, PBS scripts execute in your home directory, not the
+# directory from which they were submitted. The following line
+# places the job in the directory from which the job was submitted.
+
+module add python/3.6-GPU
+source $HOME/venv/bin/activate
+cd $HOME/research/fake-review/src
+
+# run the program using the relative path
+
+python algs/rev2run.py $data 1 1 1 1 1 1 0 10 $k $n $ind
+python algs/rev2run.py $data 1 2 1 1 1 1 0 10 $k $n $ind
+python algs/rev2run.py $data 1 1 2 1 1 1 0 10 $k $n $ind
+python algs/rev2run.py $data 1 1 1 2 1 1 0 10 $k $n $ind
+python algs/rev2run.py $data 1 1 1 1 2 1 0 10 $k $n $ind
+
+exit 0
+'''
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='rev2run')
     parser.add_argument('-d', '--data', action='store', choices=['alpha', 'amazon', 'epinions', 'otc'], help='target dataset')
     parser.add_argument('-c', '--clean', action='store_true', help='clean up the qjobs and outputs')
     parser.add_argument('-a', '--alg', action='store', choices=['rev2'], default='rev2', help='algorithm')
+    parser.add_argument('-t', '--template', action='store', choices=['pbs', 'anthill'], default='anthill',
+                        help='pbs or anthill (sun grid engine)')
     parsed = parser.parse_args(sys.argv[1:])
     
     print(parsed)
@@ -80,6 +126,10 @@ if __name__ == '__main__':
         os.mkdir(parsed.alg)
     if not os.path.exists(os.path.join(parsed.alg, parsed.data)):
         os.mkdir(os.path.join(parsed.alg, parsed.data))
+
+    template = anthill_template
+    if parsed.template == 'pbs':
+        template = pbs_template
     
     for k in range(10):
         for n in n_range:

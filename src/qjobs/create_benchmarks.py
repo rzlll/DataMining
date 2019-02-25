@@ -3,7 +3,7 @@
 import sys, os, argparse, subprocess
 import itertools
 
-template = '''
+anthill_template = '''
 #!/usr/bin/env bash
 
 # The name of the job, can be anything, simply used when displaying the list of running jobs
@@ -51,11 +51,52 @@ wait
 exit 0
 '''
 
+pbs_template = '''
+#!/bin/bash -l
+# declare a name for this job to be my_serial_job
+# it is recommended that this name be kept to 16 characters or less
+#PBS -N $algorithm-$data-$k-$n-$ind
+#PBS -j oe
+#PBS -l mem=$vf
+
+# request the queue (enter the possible names, if omitted, default is the default)
+# this job is going to use the default
+#PBS -q default
+
+# request 1 node
+#PBS -l nodes=1:ppn=1
+
+# request 0 hours and 15 minutes of wall time
+# (Default is 1 hour without this directive)
+#PBS -l walltime=$time
+
+# mail is sent to you when the job starts and when it terminates or aborts 
+####PBS -m bea
+
+# specify your email address 
+####PBS -M John.Smith@dartmouth.edu
+
+# By default, PBS scripts execute in your home directory, not the
+# directory from which they were submitted. The following line
+# places the job in the directory from which the job was submitted.
+
+module add python/3.6-GPU
+source $HOME/venv/bin/activate
+cd $HOME/research/fake-review/src
+
+# run the program using the relative path
+
+python algs/$algorithm.py $data $k $n $ind
+
+exit 0
+'''
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='create qjobs')
     parser.add_argument('-d', '--data', action='store', choices=['alpha', 'amazon', 'epinions', 'otc'], default='alpha', help='target dataset')
     parser.add_argument('-c', '--clean', action='store_true', help='clean up the qjobs and outputs')
     parser.add_argument('-a', '--alg', action='store', choices=['bn', 'feagle', 'fraudar', 'trust', 'rsd', 'bad'], default='bn', help='algorithm')
+    parser.add_argument('-t', '--template', action='store', choices=['pbs', 'anthill'], default='anthill', help='pbs or anthill (sun grid engine)')
     parsed = parser.parse_args(sys.argv[1:])
     
     print(parsed)
@@ -81,6 +122,10 @@ if __name__ == '__main__':
     if not os.path.exists(os.path.join(parsed.alg, parsed.data)):
         os.mkdir(os.path.join(parsed.alg, parsed.data))
 
+    template = anthill_template
+    if parsed.template == 'pbs':
+        template = pbs_template
+
     create_list = []
     skip_list = []
     for k in range(10):
@@ -93,7 +138,7 @@ if __name__ == '__main__':
                     continue
                 # epinions is large
                 if parsed.data == 'epinions':
-                    script = template.replace('$data', parsed.data).replace('$k', str(k)).replace('$n', str(n)).replace('$algorithm', parsed.alg).replace('$ind', str(ind)).replace('$vf', '20G').replace('$time', '9:59:59')
+                    script = template.replace('$data', parsed.data).replace('$k', str(k)).replace('$n', str(n)).replace('$algorithm', parsed.alg).replace('$ind', str(ind)).replace('$vf', '20G').replace('$time', '23:59:59')
                 else:
                     script = template.replace('$data', parsed.data).replace('$k', str(k)).replace('$n', str(n)).replace('$algorithm', parsed.alg).replace('$ind', str(ind)).replace('$vf', '10G').replace('$time', '23:59:59')
 
