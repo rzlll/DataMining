@@ -214,9 +214,9 @@ for node in nodes:
 
 outfile = '%s/%s-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d.csv' % (outdir, data_name, alpha1, alpha2, beta1, beta2, gamma1, gamma2, gamma3, k, N, ind)
 
-rev2_list = [[out_dict[x[0]]]+ list(x) for x in all_node_vals if x[0] in out_dict]
+rtv_list = [[out_dict[x[0]]]+ list(x) for x in all_node_vals if x[0] in out_dict]
 
-out_list = [[x[0]] + ['s' + x[1][1:]] + x[2:] if x[1] in socks_list else x for x in rev2_list]
+out_list = [[x[0]] + ['s' + x[1][1:]] + x[2:] if x[1] in socks_list else x for x in rtv_list]
 out_list = sorted(out_list, key=lambda x: x[2])
 pd.DataFrame(out_list).to_csv(outfile, header=False, index=False)
-pd.DataFrame(rev2_list).to_csv(outfile, header=False, index=False)
+pd.DataFrame(rtv_list).to_csv(outfile, header=False, index=False)

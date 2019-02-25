@@ -86,6 +86,11 @@ cd $HOME/research/fake-review/src
 
 # run the program using the relative path
 
+OUTPUT_DIR="../res/$algorithm/$data/"
+if [ ! -d $OUTPUT_DIR ]; then
+    mkdir -p $OUTPUT_DIR
+fi
+
 python algs/$algorithm.py $data $k $n $ind
 
 exit 0
