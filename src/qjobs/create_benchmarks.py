@@ -81,7 +81,7 @@ pbs_template = '''
 # places the job in the directory from which the job was submitted.
 
 module add python/3.6-GPU
-source $HOME/venv/bin/activate
+source activate default
 cd $HOME/research/fake-review/src
 
 # run the program using the relative path
