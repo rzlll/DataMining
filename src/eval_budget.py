@@ -125,7 +125,7 @@ def compute_score(k=0, n=0, ind=0):
                                      header=None)
         except:
             return None
-        ytrue = [0 if t == 1 else 1 for t in results_df[0].tolist()]
+        ytrue = [-1 if t == 1 else 1 for t in results_df[0].tolist()]   ### original fraudster.marker = -1
         ulist = results_df[1].tolist()
         yscore = results_df[2].tolist()
     return {'ulist': ulist, 'ytrue': ytrue, 'yscore': yscore}
@@ -147,6 +147,7 @@ def get_metrics(ytrue, yscore):
         prec = sklearn.metrics.precision_score(y_pred=ypred, y_true=ytrue)
         recl = sklearn.metrics.recall_score(y_pred=ypred, y_true=ytrue)
         f1 = sklearn.metrics.f1_score(y_pred=ypred, y_true=ytrue)
+
         prec_dict[qq] = prec
         recl_dict[qq] = recl
         f1_dict[qq] = f1
@@ -157,6 +158,7 @@ def compute_metrics(res_dict, k, n, ind):
     ulist = np.array(res_dict[(k, n, ind)]['ulist'])
     yscore = np.array(res_dict[(k, n, ind)]['yscore'])
     ytrue = np.array(res_dict[(k, n, ind)]['ytrue'])
+    ytrue[ytrue > 1] = 1
     prec_dict, recl_dict, f1_dict = get_metrics(ytrue, yscore)
     return {'prec': prec_dict, 'recl': recl_dict, 'f1': f1_dict}
 

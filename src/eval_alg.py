@@ -78,10 +78,13 @@ def compute_score(k=0, n=0, ind=0):
             results_df = pd.read_csv('../res/%s/%s/%s-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)
         except:
             return None
-        ytrue = [0 if t==1 else 1 for t in results_df[0].tolist()]
+        ytrue = [0 if t==1 else 1 for t in results_df[0].tolist()]       
         ulist = results_df[1].tolist()
         yscore = results_df[2].tolist()
     return {'ulist': ulist, 'ytrue': ytrue, 'yscore': yscore}
+
+
+
 
 @numba.jit
 def get_metrics(ytrue, yscore):
@@ -102,12 +105,13 @@ def get_metrics(ytrue, yscore):
         prec_dict[qq] = prec
         recl_dict[qq] = recl
         f1_dict[qq] = f1
-    return prec_dict, recl_dict, f1_dict
+    return prec_dict, recl_dict, f1_dict, prec1_dict
 
 def compute_metrics(res_dict, k, n, ind):
     ulist = np.array(res_dict[(k, n, ind)]['ulist'])
     yscore = np.array(res_dict[(k, n, ind)]['yscore'])
     ytrue = np.array(res_dict[(k, n, ind)]['ytrue'])
+    ytrue[ytrue > 1] = 1
     prec_dict, recl_dict, f1_dict = get_metrics(ytrue, yscore)
     return {'prec': prec_dict, 'recl': recl_dict, 'f1': f1_dict}
 
