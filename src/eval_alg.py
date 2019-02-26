@@ -53,9 +53,13 @@ def compute_score(k=0, n=0, ind=0):
     # if user is sockpuppet output 2
     
     if alg_name == 'rev2':
-        results_df = pd.read_csv('../res/%s/%s/%s-1-1-1-1-1-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)
+        try:
+            results_df = pd.read_csv('../res/%s/%s/%s-1-1-1-1-1-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)
+        except:
+            return None
         ulist = results_df[1].tolist()
-        ytrue = [0 if t==1 else 1 for t in results_df[0].tolist()]
+        ytrue_old = results_df[0].tolist()
+        ytrue = [0 if ytrue_old[i] == 1 else 2 if ulist[i][0] == 's' else 1 for i in range(len(ytrue_old))]
         u_sum = {u: 0 for u in ulist}
         flist = [
             '../res/%s/%s/%s-1-1-1-1-1-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind),
@@ -78,9 +82,14 @@ def compute_score(k=0, n=0, ind=0):
             results_df = pd.read_csv('../res/%s/%s/%s-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)
         except:
             return None
+<<<<<<< HEAD
         ytrue = [0 if t==1 else 1 for t in results_df[0].tolist()]       
+=======
+        ytrue_old = results_df[0].tolist()
+>>>>>>> ff3dc3ee56b8108b5deb5022c9fd6f535ddb2f5f
         ulist = results_df[1].tolist()
         yscore = results_df[2].tolist()
+        ytrue = [0 if ytrue_old[i] == 1 else 2 if ulist[i][0] == 's' else 1 for i in range(len(ytrue_old))]
     return {'ulist': ulist, 'ytrue': ytrue, 'yscore': yscore}
 
 

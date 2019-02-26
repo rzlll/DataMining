@@ -8,9 +8,9 @@ import numba
 import sklearn
 import sklearn.metrics
 
-import time, datetime
+# import time, datetime
 import itertools
-from joblib import Parallel, delayed
+# from joblib import Parallel, delayed
 import pickle
 
 parser = argparse.ArgumentParser(description='evaluate algorithms with data')
@@ -21,8 +21,7 @@ parser.add_argument('-a', '--alg', type=str, default='bad',
 parser.add_argument('-n', '--ncores', type=int, default=1, help='number of cores to use (disabled after using numba)')
 
 # for budget model
-parser.add_argument('-c', '--creation', type=int, default=1, help='per creation cost')
-parser.add_argument('-r', '--review', type=int, default=1, help='per review cost')
+parser.add_argument('-c', '--cost', type=int, default=1, help='cost')
 parser.add_argument('-b', '--budget', type=int, default=1, help='total budget')
 
 parsed = parser.parse_args(sys.argv[1:])
@@ -35,12 +34,13 @@ data_name = parsed.data
 alg_name = parsed.alg
 n_cores = parsed.ncores
 
-ccost = parsed.creation
-rcost = parsed.review
-budget = parsed.budget
+# ccost_list = [6, 7, 8, 10]
+# budget_list = [100, 300, 500]
+
+ccost_budget_pairs = [(6, 600), (6.5, 325), (7, 70), (8, 40), (6, 1200), (6, 1000)]
 
 print(alg_name, data_name)
-print(ccost, rcost, budget)
+print(ccost_budget_pairs)
 
 def load_data(data_name):
     data_list = ['alpha', 'amazon', 'epinions', 'otc']
@@ -81,16 +81,21 @@ n_range[0] = 1
 d_list = list(range(50))
 np.random.seed(53)
 T_index = np.random.permutation(len(target_pool))[d_list]
-# T_list = [target_pool[i] for i in T_index]
 
-eligible_bugets = []
-for k, n in itertools.product(range(10), n_range):
-    for i in d_list:
-        t = target_pool[i]
-        K = int(np.ceil(k * count_dict[t] / 10))
-        sum_cost = ccost * K + rcost * n
-        if sum_cost <= budget:
-            eligible_bugets += [(k, n, i)]
+# compute the bugets pairs
+
+ccost_budget_eligibles = {}
+
+for ccost, budget in ccost_budget_pairs:
+    eligible_budgets = []
+    for k, n in itertools.product(range(10), n_range):
+        for i in d_list:
+            t = target_pool[i]
+            K = int(np.ceil(k * count_dict[t] / 10))
+            sum_cost = K * ccost * n
+            if sum_cost <= budget:
+                eligible_budgets += [(k, n, i)]
+    ccost_budget_eligibles[(ccost, budget)] = eligible_budgets
 
 def compute_score(k=0, n=0, ind=0):
     # if user is good in ground truth output 0
@@ -98,10 +103,13 @@ def compute_score(k=0, n=0, ind=0):
     # if user is sockpuppet output 2
 
     if alg_name == 'rev2':
-        results_df = pd.read_csv(
-            '../res/%s/%s/%s-1-1-1-1-1-1-0-%d-%d-%d.csv' % (alg_name, data_name, data_name, k, n, ind), header=None)
+        try:
+            results_df = pd.read_csv('../res/%s/%s/%s-1-1-1-1-1-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)
+        except:
+            return None
         ulist = results_df[1].tolist()
-        ytrue = [0 if t == 1 else 1 for t in results_df[0].tolist()]
+        ytrue_old = results_df[0].tolist()
+        ytrue = [0 if ytrue_old[i] == 1 else 2 if ulist[i][0] == 's' else 1 for i in range(len(ytrue_old))]
         u_sum = {u: 0 for u in ulist}
         flist = [
             '../res/%s/%s/%s-1-1-1-1-1-1-0-%d-%d-%d.csv' % (alg_name, data_name, data_name, k, n, ind),
@@ -125,9 +133,14 @@ def compute_score(k=0, n=0, ind=0):
                                      header=None)
         except:
             return None
+<<<<<<< HEAD
         ytrue = [-1 if t == 1 else 1 for t in results_df[0].tolist()]   ### original fraudster.marker = -1
+=======
+        ytrue_old = results_df[0].tolist()
+>>>>>>> ff3dc3ee56b8108b5deb5022c9fd6f535ddb2f5f
         ulist = results_df[1].tolist()
         yscore = results_df[2].tolist()
+        ytrue = [0 if ytrue_old[i] == 1 else 2 if ulist[i][0] == 's' else 1 for i in range(len(ytrue_old))]
     return {'ulist': ulist, 'ytrue': ytrue, 'yscore': yscore}
 
 
@@ -153,7 +166,6 @@ def get_metrics(ytrue, yscore):
         f1_dict[qq] = f1
     return prec_dict, recl_dict, f1_dict
 
-
 def compute_metrics(res_dict, k, n, ind):
     ulist = np.array(res_dict[(k, n, ind)]['ulist'])
     yscore = np.array(res_dict[(k, n, ind)]['yscore'])
@@ -166,29 +178,39 @@ def compute_metrics(res_dict, k, n, ind):
 n_range = list(range(0, 51, 5))
 n_range[0] = 1
 
-results_dict = {}
-metrics_dict = {}
-
 print('retrieve results and compute the metrics')
 
-eligible_kn = set()
-for k, n, d in itertools.product(range(10), n_range, range(50)):
-    if (k, n, d) in eligible_bugets:
-        results_dict[(k, n, d)] = compute_score(k, n, d)
-    else:
-        results_dict[(k, n, d)] = None
+budget_results = {}
+budget_metrics = {}
 
-    if results_dict[(k, n, d)] != None:
-        metrics_dict[(k, n, d)] = compute_metrics(results_dict, k, n, d)
-        eligible_kn.add((k, n))
-    else:
-        metrics_dict[(k, n, d)] = None
+for ccost, budget in ccost_budget_pairs:
+    print('cost: {}, budget: {}'.format(ccost, budget))
+    
+    results_dict = {}
+    metrics_dict = {}
+    
+    eligible_budgets = ccost_budget_eligibles[(ccost, budget)]
+    eligible_kn = set()
+    for k, n, d in itertools.product(range(10), n_range, range(50)):
+        if (k, n, d) in eligible_budgets:
+            results_dict[(k, n, d)] = compute_score(k, n, d)
+        else:
+            results_dict[(k, n, d)] = None
 
-print('eligible kn {}'.format(len(eligible_kn)))
+        if results_dict[(k, n, d)] != None:
+            metrics_dict[(k, n, d)] = compute_metrics(results_dict, k, n, d)
+            if k > 0:
+                eligible_kn.add((k, n))
+        else:
+            metrics_dict[(k, n, d)] = None
+
+    print('eligible kn {}'.format(len(eligible_kn)))
+    budget_results[(ccost, budget)] = results_dict
+    budget_metrics[(ccost, budget)] = metrics_dict
 
 print('save the pickles')
 with open('../res/%s/budget-res-%s.pkl' % (alg_name, data_name), 'wb') as f:
-    pickle.dump(results_dict, f)
+    pickle.dump(budget_results, f)
 
 with open('../res/%s/budget-eval-%s.pkl' % (alg_name, data_name), 'wb') as f:
-    pickle.dump(metrics_dict, f)
+    pickle.dump(budget_metrics, f)
