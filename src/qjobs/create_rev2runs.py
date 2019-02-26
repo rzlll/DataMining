@@ -107,8 +107,7 @@ if __name__ == '__main__':
     parser.add_argument('-d', '--data', action='store', choices=['alpha', 'amazon', 'epinions', 'otc'], help='target dataset')
     parser.add_argument('-c', '--clean', action='store_true', help='clean up the qjobs and outputs')
     parser.add_argument('-a', '--alg', action='store', choices=['rev2'], default='rev2', help='algorithm')
-    parser.add_argument('-t', '--template', action='store', choices=['pbs', 'anthill'], default='anthill',
-                        help='pbs or anthill (sun grid engine)')
+    parser.add_argument('-t', '--template', action='store', choices=['pbs', 'anthill'], default='anthill', help='pbs or anthill (sun grid engine)')
     parsed = parser.parse_args(sys.argv[1:])
     
     print(parsed)

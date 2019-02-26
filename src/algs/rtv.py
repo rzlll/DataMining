@@ -9,7 +9,6 @@ import networkx as nx
 
 import time, datetime
 import pickle
-from collections import defaultdict
 
 data_name = sys.argv[1]
 
@@ -40,7 +39,6 @@ print('save to', outdir)
 ## algorithm begins here
 
 nodes = G.nodes()
-# nodes = list(G.nodes)  # To solve AttributeError
 edges = G.edges(data=True)
 print ("%s network has %d nodes and %d edges" % (data_name, len(nodes), len(edges)))
 

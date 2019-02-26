@@ -3,7 +3,7 @@
 import sys, os, argparse, subprocess
 import itertools
 
-template = '''
+anthill_template = '''
 #!/usr/bin/env bash
 
 # The name of the job, can be anything, simply used when displaying the list of running jobs
@@ -47,11 +47,57 @@ wait
 exit 0
 '''
 
+pbs_template = '''
+#!/bin/bash -l
+# declare a name for this job to be my_serial_job
+# it is recommended that this name be kept to 16 characters or less
+#PBS -N $algorithm-$data-$k-$n-$ind
+#PBS -j oe
+#PBS -l mem=$vf
+
+# request the queue (enter the possible names, if omitted, default is the default)
+# this job is going to use the default
+#PBS -q default
+
+# request 1 node
+#PBS -l nodes=1:ppn=1
+
+# request 0 hours and 15 minutes of wall time
+# (Default is 1 hour without this directive)
+#PBS -l walltime=$time
+
+# mail is sent to you when the job starts and when it terminates or aborts 
+####PBS -m bea
+
+# specify your email address 
+####PBS -M John.Smith@dartmouth.edu
+
+# By default, PBS scripts execute in your home directory, not the
+# directory from which they were submitted. The following line
+# places the job in the directory from which the job was submitted.
+
+module add python/3.6-GPU
+source activate default
+cd $HOME/research/fake-review/src
+
+# run the program using the relative path
+
+OUTPUT_DIR="../res/$algorithm/$data/"
+if [ ! -d $OUTPUT_DIR ]; then
+    mkdir -p $OUTPUT_DIR
+fi
+
+python eval_alg.py -a $algorithm -d $data
+
+exit 0
+'''
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='create qjobs')
     # parser.add_argument('-d', '--data', action='store', choices=['alpha', 'amazon', 'epinions', 'otc'], default='alpha', help='target dataset')
     parser.add_argument('-c', '--clean', action='store_true', help='clean up the qjobs and outputs')
     # parser.add_argument('-a', '--alg', action='store', choices=['bn', 'feagle', 'fraudar', 'trust', 'rsd', 'bad'], default='bn', help='algorithm')
+    parser.add_argument('-t', '--template', action='store', choices=['pbs', 'anthill'], default='anthill', help='pbs or anthill (sun grid engine)')
     parsed = parser.parse_args(sys.argv[1:])
     
     print(parsed)
@@ -71,6 +117,10 @@ if __name__ == '__main__':
     
     n_range = list(range(0, 51, 5))
     n_range[0] = 1
+
+    template = anthill_template
+    if parsed.template == 'pbs':
+        template = pbs_template
 
     if not os.path.exists('budget'):
         os.mkdir('budget')
