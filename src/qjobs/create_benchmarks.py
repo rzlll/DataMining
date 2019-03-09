@@ -141,9 +141,9 @@ if __name__ == '__main__':
                 if os.path.exists(target_path):
                     skip_list.append(target_path)
                     continue
-                # epinions is large
+                # epinions is large and needs a lot of time to produce
                 if parsed.data == 'epinions':
-                    script = template.replace('$data', parsed.data).replace('$k', str(k)).replace('$n', str(n)).replace('$algorithm', parsed.alg).replace('$ind', str(ind)).replace('$vf', '20G').replace('$time', '23:59:59')
+                    script = template.replace('$data', parsed.data).replace('$k', str(k)).replace('$n', str(n)).replace('$algorithm', parsed.alg).replace('$ind', str(ind)).replace('$vf', '20G').replace('$time', '47:59:59')
                 else:
                     script = template.replace('$data', parsed.data).replace('$k', str(k)).replace('$n', str(n)).replace('$algorithm', parsed.alg).replace('$ind', str(ind)).replace('$vf', '10G').replace('$time', '23:59:59')
 
