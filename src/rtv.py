@@ -536,3 +536,15 @@ out_list = sorted(out_list, key=lambda x: x[2])
 
 print(out_list)
 
+
+# In[40]:
+
+
+print(pd.DataFrame(out_list))
+
+
+# In[39]:
+
+
+pd.DataFrame(out_list).to_csv(outfile, header=False, index=False)
+
