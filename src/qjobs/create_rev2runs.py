@@ -135,13 +135,28 @@ if __name__ == '__main__':
     if parsed.template == 'pbs':
         template = pbs_template
     
+    create_list = []
+    skip_list = []
+
     for k in range(10):
         for n in n_range:
             for ind in range(50):
                 qjob_name = 'rev2run-%s-%d-%d-%d.qjob' %(parsed.data, k, n, ind)
+                
+                target_path = '../../res/%s/%s/%s-1-1-1-1-1-1-0-%d-%d-%d.csv' %(parsed.alg, parsed.data, parsed.data, k, n, ind)
+                if os.path.exists(target_path):
+                    skip_list.append(target_path)
+                    continue
+                create_list.append(target_path)
+
                 if parsed.data == 'epinions':
                     script = template.replace('$k', str(k)).replace('$n', str(n)).replace('$data', parsed.data).replace('$ind', str(ind)).replace('$vf', '20G')
                 else:
                     script = template.replace('$k', str(k)).replace('$n', str(n)).replace('$data', parsed.data).replace('$ind', str(ind)).replace('$vf', '10G')
                 with open(os.path.join(parsed.alg, parsed.data, qjob_name), 'w') as f:
                     f.write(script)
+
+    print('skip', len(skip_list))
+    print('show 10', skip_list[-10:])
+    print('create', len(create_list))
+    print('show 10', create_list[-10:])
