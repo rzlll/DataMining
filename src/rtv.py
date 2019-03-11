@@ -22,8 +22,8 @@ import pickle
 
 import argparse
 
-parser = argparse.ArgumentParser(description='data prep')
-parser.add_argument('-d', '--diff', type=int, default=10, action='store', help='diff days')
+parser = argparse.ArgumentParser(description='rtv algorithm')
+# parser.add_argument('-d', '--diff', type=int, default=10, action='store', help='diff days')
 
 if bool(getattr(sys, 'ps1', sys.flags.interactive)):
     from tqdm import tqdm_notebook as tqdm
@@ -46,7 +46,6 @@ if bool(getattr(sys, 'ps1', sys.flags.interactive)):
 else:
     from tqdm import tqdm
     print('script mode')
-    parsed = parser.parse_args(sys.argv[1:])
     display=print
     
     data_name = sys.argv[1]
