@@ -42,11 +42,7 @@ if [ ! -d $OUTPUT_DIR ]; then
     mkdir -p $OUTPUT_DIR
 fi
 
-python algs/rev2run.py $data 1 1 1 1 1 1 0 10 $k $n $ind
-python algs/rev2run.py $data 1 2 1 1 1 1 0 10 $k $n $ind
-python algs/rev2run.py $data 1 1 2 1 1 1 0 10 $k $n $ind
-python algs/rev2run.py $data 1 1 1 2 1 1 0 10 $k $n $ind
-python algs/rev2run.py $data 1 1 1 1 2 1 0 10 $k $n $ind
+python rtv.py $data 1 1 1 1 10 2 1 0 10 $k $n $ind
 
 wait
 # done
@@ -93,12 +89,6 @@ if [ ! -d $OUTPUT_DIR ]; then
     mkdir -p $OUTPUT_DIR
 fi
 
-python algs/rev2run.py $data 1 1 1 1 1 1 0 10 $k $n $ind
-python algs/rev2run.py $data 1 2 1 1 1 1 0 10 $k $n $ind
-python algs/rev2run.py $data 1 1 2 1 1 1 0 10 $k $n $ind
-python algs/rev2run.py $data 1 1 1 2 1 1 0 10 $k $n $ind
-python algs/rev2run.py $data 1 1 1 1 2 1 0 10 $k $n $ind
-
 exit 0
 '''
 
@@ -106,7 +96,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='rev2run')
     parser.add_argument('-d', '--data', action='store', choices=['alpha', 'amazon', 'epinions', 'otc'], help='target dataset')
     parser.add_argument('-c', '--clean', action='store_true', help='clean up the qjobs and outputs')
-    parser.add_argument('-a', '--alg', action='store', choices=['rev2'], default='rev2', help='algorithm')
+    parser.add_argument('-a', '--alg', action='store', choices=['rtv'], default='rtv', help='algorithm')
     parser.add_argument('-t', '--template', action='store', choices=['pbs', 'anthill'], default='anthill', help='pbs or anthill (sun grid engine)')
     parsed = parser.parse_args(sys.argv[1:])
     
@@ -123,7 +113,7 @@ if __name__ == '__main__':
         print(proc_ret)
         exit()
     
-    n_range = list(range(0, 51, 5))
+    n_range = list(range(0, 10, 5))
     n_range[0] = 1
 
     if not os.path.exists(parsed.alg):
@@ -138,12 +128,12 @@ if __name__ == '__main__':
     create_list = []
     skip_list = []
 
-    for k in range(10):
+    for k in range(1):
         for n in n_range:
             for ind in range(50):
-                qjob_name = 'rev2run-%s-%d-%d-%d.qjob' %(parsed.data, k, n, ind)
+                qjob_name = 'rtv-%s-%d-%d-%d.qjob' %(parsed.data, k, n, ind)
                 
-                target_path = '../../res/%s/%s/%s-1-1-1-1-1-1-0-%d-%d-%d.csv' %(parsed.alg, parsed.data, parsed.data, k, n, ind)
+                target_path = '../../res/%s/%s/%s-1-1-1-1-1-1-1-0-%d-%d-%d.csv' %(parsed.alg, parsed.data, parsed.data, k, n, ind)
                 if os.path.exists(target_path):
                     skip_list.append(target_path)
                     continue
