@@ -26,25 +26,24 @@ parser = argparse.ArgumentParser(description='rtv algorithm')
 # parser.add_argument('-d', '--diff', type=int, default=10, action='store', help='diff days')
 
 if bool(getattr(sys, 'ps1', sys.flags.interactive)):
-    from tqdm import tqdm_notebook as tqdm
     data_name = 'alpha'
     alpha1 = 1
     alpha2 = 1
     beta1 = 1
     beta2 = 1
-    gamma1 = 1
-    gamma2 = 1
+    gamma1 = 10
+    gamma2 = 2
     gamma3 = 1
     gamma4 = 1
     max_iter = 10
     k = 1
     N = 1
     ind = 1
+    
     trusted_num = 100
     verified_num = 100
     trusted_rev = 50
 else:
-    from tqdm import tqdm
     print('script mode')
     display=print
     
@@ -439,6 +438,10 @@ while iter < max_iter:
         c2 = gamma2*np.mean(component2) if len(component2) > 0 else 0
         c3 = gamma3*np.mean(component3) if len(component3) > 0 else 0
         
+        # no need to update
+        if gamma1*len(component1) + gamma2*len(component2) + gamma3*len(component3) + gamma4 == 0:
+            continue
+
         x = (c1 + c2 + c3 + gamma4*kl_text)/(gamma1*len(component1) + gamma2*len(component2) + gamma3*len(component3) + gamma4)
         
         if x < 0.00:

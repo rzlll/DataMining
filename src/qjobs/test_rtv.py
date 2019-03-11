@@ -42,7 +42,7 @@ if [ ! -d $OUTPUT_DIR ]; then
     mkdir -p $OUTPUT_DIR
 fi
 
-python rtv.py $data 1 1 1 1 10 2 1 0 10 $k $n $ind
+python rtv.py $data 1 1 1 1 10 2 1 1 20 $k $n $ind
 
 wait
 # done
@@ -133,7 +133,7 @@ if __name__ == '__main__':
             for ind in range(50):
                 qjob_name = 'rtv-%s-%d-%d-%d.qjob' %(parsed.data, k, n, ind)
                 
-                target_path = '../../res/%s/%s/%s-1-1-1-1-1-1-1-0-%d-%d-%d.csv' %(parsed.alg, parsed.data, parsed.data, k, n, ind)
+                target_path = '../../res/%s/%s/%s-1-1-1-1-1-1-1-1-%d-%d-%d.csv' %(parsed.alg, parsed.data, parsed.data, k, n, ind)
                 if os.path.exists(target_path):
                     skip_list.append(target_path)
                     continue
