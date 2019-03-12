@@ -37,7 +37,7 @@ anthill_template = '''
 source $HOME/venv/bin/activate
 cd $HOME/research/fake-review/src
 
-OUTPUT_DIR="../res/rev2/$data/"
+OUTPUT_DIR="../res/rtv/$data/"
 if [ ! -d $OUTPUT_DIR ]; then
     mkdir -p $OUTPUT_DIR
 fi
@@ -46,49 +46,6 @@ python rtv.py $data 1 1 1 1 10 2 1 1 20 $k $n $ind
 
 wait
 # done
-exit 0
-'''
-
-pbs_template = '''
-#!/bin/bash -l
-# declare a name for this job to be my_serial_job
-# it is recommended that this name be kept to 16 characters or less
-#PBS -N $algorithm-$data-$k-$n-$ind
-#PBS -j oe
-#PBS -l mem=$vf
-
-# request the queue (enter the possible names, if omitted, default is the default)
-# this job is going to use the default
-#PBS -q default
-
-# request 1 node
-#PBS -l nodes=1:ppn=1
-
-# request 0 hours and 15 minutes of wall time
-# (Default is 1 hour without this directive)
-#PBS -l walltime=$time
-
-# mail is sent to you when the job starts and when it terminates or aborts 
-####PBS -m bea
-
-# specify your email address 
-####PBS -M John.Smith@dartmouth.edu
-
-# By default, PBS scripts execute in your home directory, not the
-# directory from which they were submitted. The following line
-# places the job in the directory from which the job was submitted.
-
-module add python/3.6-GPU
-source activate default
-cd $HOME/research/fake-review/src
-
-# run the program using the relative path
-
-OUTPUT_DIR="../res/$algorithm/$data/"
-if [ ! -d $OUTPUT_DIR ]; then
-    mkdir -p $OUTPUT_DIR
-fi
-
 exit 0
 '''
 

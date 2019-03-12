@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+
 # coding: utf-8
 
 # In[1]:
@@ -521,7 +521,7 @@ for node in nodes:
     all_node_vals.append([node, (f - median_fvals)*np.log(G.out_degree(node)+1), f, G.out_degree(node)])
 # all_node_vals = np.array(all_node_vals)
 
-outfile = '%s/%s-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d.csv' % (outdir, data_name, alpha1, alpha2, beta1, beta2, gamma1, gamma2, gamma3, k, N, ind)
+outfile = '%s/%s-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d.csv' % (outdir, data_name, alpha1, alpha2, beta1, beta2, gamma1, gamma2, gamma3, gamma4, k, N, ind)
 
 rtv_list = [[out_dict[x[0]]]+ list(x) for x in all_node_vals if x[0] in out_dict]
 
