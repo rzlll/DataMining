@@ -35,10 +35,10 @@ if bool(getattr(sys, 'ps1', sys.flags.interactive)):
     gamma2 = 2
     gamma3 = 1
     gamma4 = 1
-    max_iter = 10
-    k = 1
-    N = 1
-    ind = 1
+    max_iter = 3
+    k = 0
+    N = 0
+    ind = 0
     
     trusted_num = 100
     verified_num = 100
@@ -62,9 +62,9 @@ else:
 
     max_iter = int(sys.argv[10])
 
-    k = int(sys.argv[11])
-    N = int(sys.argv[12])
-    ind = int(sys.argv[13])
+    k = 0
+    N = 0
+    ind = 0
     
     trusted_num = 100
     verified_num = 100
@@ -265,9 +265,6 @@ verified_list = ['u' + str(u) for u in verified_users]
 
 # In[14]:
 
-
-outdir = '../res/rtv/%s' %(data_name)
-print('save to', outdir)
 
 ## algorithm begins here
 
@@ -525,7 +522,9 @@ for node in nodes:
     all_node_vals.append([node, (f - median_fvals)*np.log(G.out_degree(node)+1), f, G.out_degree(node)])
 # all_node_vals = np.array(all_node_vals)
 
-outfile = '%s/%s-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d.csv' % (outdir, data_name, alpha1, alpha2, beta1, beta2, gamma1, gamma2, gamma3, gamma4, k, N, ind)
+
+out_dir = '../res/non-socks'
+outfile = '%s/rtv-%s-%d-%d-%d-%d-%d-%d-%d-%d.csv' % (out_dir, data_name, alpha1, alpha2, beta1, beta2, gamma1, gamma2, gamma3, gamma4)
 
 rtv_list = [[out_dict[x[0]]]+ list(x) for x in all_node_vals if x[0] in out_dict]
 

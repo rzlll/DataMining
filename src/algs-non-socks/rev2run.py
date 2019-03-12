@@ -25,16 +25,13 @@ gamma3 = int(sys.argv[8])
 
 max_iter = int(sys.argv[9])
 
-k = int(sys.argv[10])
-N = int(sys.argv[11])
-ind = int(sys.argv[12])
+k = 0
+N = 0
+ind = 0
 
 if gamma1 == 0 and gamma2 == 0 and gamma3 == 0: sys.exit(0)
 
-exec(open('fake_block.py', 'r').read())
-
-outdir = '../res/myalg/%s' %(data_name)
-print('save to', outdir)
+exec(open('fake-non-socks.py', 'r').read())
 
 ## algorithm begins here
 
@@ -211,7 +208,8 @@ for node in nodes:
     all_node_vals.append([node, (f - median_fvals)*np.log(G.out_degree(node)+1), f, G.out_degree(node)])
 # all_node_vals = np.array(all_node_vals)
 
-outfile = '%s/%s-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d.csv' % (outdir, data_name, alpha1, alpha2, beta1, beta2, gamma1, gamma2, gamma3, k, N, ind)
+outdir = '../res/non-socks'
+outfile = '%s/rev2-%s-%d-%d-%d-%d-%d-%d-%d.csv' % (outdir, data_name, alpha1, alpha2, beta1, beta2, gamma1, gamma2, gamma3)
 
 rev2_list = [[out_dict[x[0]]]+ list(x) for x in all_node_vals if x[0] in out_dict]
 
