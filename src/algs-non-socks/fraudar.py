@@ -33,7 +33,8 @@ products = {n: graph.new_product(n) for n in G.node if n.startswith('p')}
 for e in G.edges:
     graph.add_review(reviewers[e[0]], products[e[1]], (G.edges[e]['weight'] + 1)/2)
 
-graph.update()
+for i in range(2):
+    graph.update()
 
 feagle_list = [[out_dict[r.name], r.name, r.anomalous_score] for r in graph.reviewers if r.name in out_dict]
 

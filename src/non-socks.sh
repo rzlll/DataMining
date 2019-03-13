@@ -15,10 +15,4 @@ python algs-non-socks/rev2run.py $dname 1 1 2 1 1 1 1 20 &
 python algs-non-socks/rev2run.py $dname 1 1 1 2 1 1 1 20 &
 python algs-non-socks/rev2run.py $dname 1 1 1 1 1 1 1 20 &
 
-python rtv-non-socks.py $dname 2 1 1 1 10 2 1 1 20 &
-python rtv-non-socks.py $dname 1 2 1 1 10 2 1 1 20 &
-python rtv-non-socks.py $dname 1 1 2 1 10 2 1 1 20 &
-python rtv-non-socks.py $dname 1 1 1 2 10 2 1 1 20 &
-python rtv-non-socks.py $dname 1 1 1 1 10 2 1 1 20 &
-
 wait

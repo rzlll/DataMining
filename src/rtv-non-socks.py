@@ -66,8 +66,8 @@ else:
     N = 0
     ind = 0
     
-    trusted_num = 100
-    verified_num = 100
+    trusted_num = int(sys.argv[11])
+    verified_num = int(sys.argv[12])
     trusted_rev = 50
 
 
