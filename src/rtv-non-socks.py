@@ -435,15 +435,17 @@ while iter < max_iter:
         # the equation for REV2
         # x = (gamma2*rating_distance + gamma1*user_fairness + gamma3*kl_text)/(gamma1 + gamma2 + gamma3)
         # the equation for RTV
-        c1 = gamma1*np.sum(component1) if len(component1) > 0 else 0
-        c2 = gamma2*np.sum(component2) if len(component2) > 0 else 0
-        c3 = gamma3*np.sum(component3) if len(component3) > 0 else 0
+        c1 = gamma1*np.mean(component1) if len(component1) > 0 else 0
+        c2 = gamma2*np.mean(component2) if len(component2) > 0 else 0
+        c3 = gamma3*np.mean(component3) if len(component3) > 0 else 0
         
         # no need to update
-        if gamma1*len(component1) + gamma2*len(component2) + gamma3*len(component3) + gamma4 == 0:
+        # den = gamma1 + gamma2 + gamma3 + gamma4
+        den = gamma1*len(component1) + gamma2*len(component2) + gamma3*len(component3) + gamma4
+        if den == 0:
             continue
 
-        x = (c1 + c2 + c3 + gamma4*kl_text)/(gamma1*len(component1) + gamma2*len(component2) + gamma3*len(component3) + gamma4)
+        x = (c1 + c2 + c3 + gamma4*kl_text)/ den
         
         if x < 0.00:
             x = 0.0
