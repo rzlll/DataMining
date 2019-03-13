@@ -58,40 +58,28 @@ def resort(ulist, ytrue, yscore):
     sscore = [uscore[u] for u in slist]
     return slist, strue, sscore
 
-def compute_score(alg_name, data_name):
+def compute_score(k=0, n=0, ind=0):
     # if user is good in ground truth output 0
     # if user is fraudster in ground truth output 1
     # if user is sockpuppet output 2
     
     if alg_name == 'rev2':
         flist = [
-        '../res/non-socks/%s-%s-1-1-1-1-1-1-1.csv' %(alg_name, data_name),
-        '../res/non-socks/%s-%s-2-1-1-1-1-1-1.csv' %(alg_name, data_name),
-        '../res/non-socks/%s-%s-1-2-1-1-1-1-1.csv' %(alg_name, data_name),
-        '../res/non-socks/%s-%s-1-1-2-1-1-1-1.csv' %(alg_name, data_name),
-        '../res/non-socks/%s-%s-1-1-1-2-1-1-1.csv' %(alg_name, data_name),
+            '../res/%s/%s/%s-1-1-1-1-1-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind),
+            '../res/%s/%s/%s-1-2-1-1-1-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind),
+            '../res/%s/%s/%s-1-1-2-1-1-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind),
+            '../res/%s/%s/%s-1-1-1-2-1-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind),
+            '../res/%s/%s/%s-1-1-1-1-2-1-0-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind)
         ]
         try:
             results_df = pd.read_csv(flist[0], header=None)
         except:
             return None
-        ulist, ytrue, yscore = average_multiple(flist)
-    elif alg_name == 'rtv':
-        flist = [
-        '../res/non-socks/%s-%s-1-1-1-1-10-2-1-1.csv' %(alg_name, data_name),
-        '../res/non-socks/%s-%s-2-1-1-1-10-2-1-1.csv' %(alg_name, data_name),
-        '../res/non-socks/%s-%s-1-2-1-1-10-2-1-1.csv' %(alg_name, data_name),
-        '../res/non-socks/%s-%s-1-1-2-1-10-2-1-1.csv' %(alg_name, data_name),
-        '../res/non-socks/%s-%s-1-1-1-2-10-2-1-1.csv' %(alg_name, data_name),
-        ]
-        try:
-            results_df = pd.read_csv(flist[0], header=None)
-        except:
-            return None
+        
         ulist, ytrue, yscore = average_multiple(flist)
     else:
         try:
-            results_df = pd.read_csv('../res/non-socks/%s-%s.csv' %(alg_name, data_name), header=None)
+            results_df = pd.read_csv('../res/%s/%s/%s-%d-%d-%d.csv' %(alg_name, data_name, data_name, k, n, ind), header=None)
         except:
             return None
         ytrue_old = results_df[0].tolist()
