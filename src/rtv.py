@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python
 # coding: utf-8
 
 # In[1]:
@@ -250,6 +250,7 @@ for node in G.nodes:
 
 # In[13]:
 
+
 print('output only about the target')
 out_dict = {'u'+str(t[0]): gt_dict[t[0]] for t in sd_list if t[1] == T and t[0] in gt_dict}
 
@@ -349,7 +350,7 @@ print(ve[:10])
 # print([e != edge[:2] for e in G.in_edges(edge[1])])
 
 
-# In[27]:
+# In[19]:
 
 
 ##### RTV ITERATIONS START ######
@@ -438,9 +439,9 @@ while iter < max_iter:
         # the equation for REV2
         # x = (gamma2*rating_distance + gamma1*user_fairness + gamma3*kl_text)/(gamma1 + gamma2 + gamma3)
         # the equation for RTV
-        c1 = gamma1*np.mean(component1) if len(component1) > 0 else 0
-        c2 = gamma2*np.mean(component2) if len(component2) > 0 else 0
-        c3 = gamma3*np.mean(component3) if len(component3) > 0 else 0
+        c1 = gamma1*np.sum(component1) if len(component1) > 0 else 0
+        c2 = gamma2*np.sum(component2) if len(component2) > 0 else 0
+        c3 = gamma3*np.sum(component3) if len(component3) > 0 else 0
         
         # no need to update
         if gamma1*len(component1) + gamma2*len(component2) + gamma3*len(component3) + gamma4 == 0:
@@ -506,7 +507,7 @@ while iter < max_iter:
         break
 
 
-# In[37]:
+# In[20]:
 
 
 currentfvals = []
@@ -537,19 +538,19 @@ out_list = [[x[0]] + ['v' + x[1][1:]] + x[2:] if x[1] in verified_list else x fo
 out_list = sorted(out_list, key=lambda x: x[2])
 
 
-# In[38]:
+# In[21]:
 
 
 print(out_list)
 
 
-# In[40]:
+# In[22]:
 
 
 print(pd.DataFrame(out_list))
 
 
-# In[39]:
+# In[23]:
 
 
 pd.DataFrame(out_list).to_csv(outfile, header=False, index=False)
