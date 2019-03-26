@@ -61,6 +61,8 @@ if __name__ == '__main__':
     parser.add_argument('-a', '--alg', action='store', choices=['rtv'], default='rtv', help='algorithm')
     parser.add_argument('-t', '--template', action='store', choices=['anthill'], default='anthill', help='pbs or anthill (sun grid engine)')
     parser.add_argument('-p', '--produce', action='store_true', help='output or not')
+    parser.add_argument('-i', '--ind', action='store', type=int, default=1, help='output or not')
+
     parsed = parser.parse_args(sys.argv[1:])
     
     
@@ -110,7 +112,7 @@ if __name__ == '__main__':
     skip_list = []
     for k in range(0, 10, 3):
         for n in n_range:
-            for ind in range(0, 3):
+            for ind in range(parsed.ind, parsed.ind+1):
                 cmd_list = []
                 for a1, a2 in itertools.product(a1_list, a2_list):
                     if a1 == a2 != 1:
