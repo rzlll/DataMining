@@ -60,7 +60,9 @@ if __name__ == '__main__':
     parser.add_argument('-c', '--clean', action='store_true', help='clean up the qjobs and outputs')
     parser.add_argument('-a', '--alg', action='store', choices=['rtv'], default='rtv', help='algorithm')
     parser.add_argument('-t', '--template', action='store', choices=['anthill'], default='anthill', help='pbs or anthill (sun grid engine)')
+    parser.add_argument('-p', '--produce', action='store_true', help='output or not')
     parsed = parser.parse_args(sys.argv[1:])
+    
     
     print(parsed)
 
@@ -89,13 +91,13 @@ if __name__ == '__main__':
     if parsed.template == 'pbs':
         template = pbs_template
         
-    a1_list = range(1, 4)
-    a2_list = range(1, 4)
+    a1_list = range(1, 3)
+    a2_list = range(1, 3)
 
-    b1_list = range(1, 4)
-    b2_list = range(1, 4)
+    b1_list = range(1, 3)
+    b2_list = range(1, 3)
 
-    g1_list = range(20, 100, 20)
+    g1_list = range(20, 100, 30)
     g2_list = range(10, 20, 5)
     g3_list = range(1, 10, 5)
     g4_list = range(1, 10, 5)
@@ -108,7 +110,7 @@ if __name__ == '__main__':
     skip_list = []
     for k in range(0, 10, 3):
         for n in n_range:
-            for ind in range(0, 10):
+            for ind in range(0, 5):
                 cmd_list = []
                 for a1, a2 in itertools.product(a1_list, a2_list):
                     if a1 == a2 != 1:
@@ -135,8 +137,9 @@ if __name__ == '__main__':
                                 script = template.replace('$data', parsed.data).replace('$k', str(k)).replace('$n', str(n)).replace('$algorithm', parsed.alg).replace('$ind', str(ind)).replace('$vf', '10G').replace('$time', '23:59:59')
 
                             script = script.replace('$cmd_template', cmd)
-                            with open(job_path, 'w') as fp:
-                                fp.write(script)
+                            if parsed.produce:
+                                with open(job_path, 'w') as fp:
+                                    fp.write(script)
                             create_list.append(target_path)
     print('skip', len(skip_list))
     print('show 10', skip_list[-10:])
