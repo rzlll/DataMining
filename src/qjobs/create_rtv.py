@@ -51,7 +51,7 @@ wait
 exit 0
 '''
 
-cmd_template = 'python rtv-non-socks.py %s %d %d %d %d %d %d %d %d %d %d %d'
+cmd_template = 'python rtv.py %s %d %d %d %d %d %d %d %d %d %d %d'
 
 
 if __name__ == '__main__':
@@ -110,7 +110,7 @@ if __name__ == '__main__':
     skip_list = []
     for k in range(0, 10, 3):
         for n in n_range:
-            for ind in range(0, 5):
+            for ind in range(0, 3):
                 cmd_list = []
                 for a1, a2 in itertools.product(a1_list, a2_list):
                     if a1 == a2 != 1:
