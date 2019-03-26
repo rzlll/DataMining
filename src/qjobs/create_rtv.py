@@ -99,6 +99,10 @@ if __name__ == '__main__':
     g2_list = range(10, 20, 5)
     g3_list = range(1, 10, 5)
     g4_list = range(1, 10, 5)
+    
+    maxiter = 30
+    tnum = 100
+    vnum = 500
 
     create_list = []
     skip_list = []
