@@ -115,7 +115,7 @@ if __name__ == '__main__':
                         for g1, g2, g3, g4 in itertools.product(g1_list, g2_list, g3_list, g4_list):
                             if g3 == g4 != 1:
                                 continue
-                            cmd = template % (dname, a1, a2, b1, b2, g1, g2, g3, g4, maxiter, tnum, vnum)
+                            cmd = template % (parsed.data, a1, a2, b1, b2, g1, g2, g3, g4, maxiter, tnum, vnum)
                             cmd_list += [cmd]
                             target_path = '../../res/%s/%s/%s-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d.csv' % (parsed.alg, parsed.data, parsed.data, alpha1, alpha2, beta1, beta2, gamma1, gamma2, gamma3, gamma4, k, N, ind)
                             job_path = './%s/%s-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d.csv' % (parsed.alg, parsed.data, alpha1, alpha2, beta1, beta2, gamma1, gamma2, gamma3, gamma4, k, N, ind)
