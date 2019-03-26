@@ -121,8 +121,8 @@ if __name__ == '__main__':
                                 continue
                             cmd = cmd_template % (parsed.data, a1, a2, b1, b2, g1, g2, g3, g4, maxiter, tnum, vnum)
                             cmd_list += [cmd]
-                            target_path = '../../res/%s/%s/%s-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d.csv' % (parsed.alg, parsed.data, parsed.data, a1, a2, b1, b2, g1, g2, g3, g4, k, N, ind)
-                            job_path = './%s/%s-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d.csv' % (parsed.alg, parsed.data, a1, a2, b1, b2, g1, g2, g3, g4, k, N, ind)
+                            target_path = '../../res/%s/%s/%s-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d.csv' % (parsed.alg, parsed.data, parsed.data, a1, a2, b1, b2, g1, g2, g3, g4, k, n, ind)
+                            job_path = './%s/%s-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d.csv' % (parsed.alg, parsed.data, a1, a2, b1, b2, g1, g2, g3, g4, k, n, ind)
 
                             qjob_name = '%s-%s-%d-%d-%d.qjob' %(parsed.alg, parsed.data, k, n, ind)
                             if os.path.exists(target_path):
