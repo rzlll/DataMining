@@ -119,7 +119,12 @@ for node in G.nodes:
 
 # out_list = ['u'+str(u) for u in socks + gt_df['id'].tolist()]
 
+print('output only about the target')
 out_dict = {'u'+str(t[0]): gt_dict[t[0]] for t in sd_list if t[1] == T and t[0] in gt_dict}
+
+# print('output all the ground truth')
+# out_dict = {'u'+str(t[0]): gt_dict[t[0]] for t in sd_list if t[0] in gt_dict}
+
 out_dict.update({'u'+str(u): -1 for u in socks})
 
 socks_list = ['u'+str(u) for u in socks]

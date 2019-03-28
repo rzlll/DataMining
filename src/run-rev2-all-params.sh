@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 
 NET=$1
-k=$2
-n=$3
-it=$4
-inds=$5
-inde=$6
 
 for c1 in $(seq 1 2)
 do
@@ -21,8 +16,8 @@ do
                     do
                         for c7 in $(seq 0 0)
                         do
-                            python algs/rev2run.py $NET $c1 $c2 $c3 $c4 $c5 $c6 $c7 $it $k $n $ind &
-                            echo algs/rev2run.py $NET $c1 $c2 $c3 $c4 $c5 $c6 $c7 $it $k $n $ind
+                            python algs/rev2run.py $NET $c1 $c2 $c3 $c4 $c5 $c6 $c7 $it &
+                            echo algs/rev2run.py $NET $c1 $c2 $c3 $c4 $c5 $c6 $c7 $it
                         done
                         wait;
                     done

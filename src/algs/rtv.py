@@ -31,9 +31,9 @@ ind = int(sys.argv[13])
 
 if gamma1 == 0 and gamma2 == 0 and gamma3 == 0: sys.exit(0)
 
-exec(open('fake_block.py', 'r').read())
+exec(open('rtv_block.py', 'r').read())
 
-outdir = '../res/rev2/%s' %(data_name)
+outdir = '../res/rtv/%s' %(data_name)
 print('save to', outdir)
 
 ## algorithm begins here
@@ -76,7 +76,7 @@ du = 0
 dp = 0
 dr = 0
 
-##### REV2 ITERATIONS START ######
+##### RTV ITERATIONS START ######
 iter = 0
 while iter < max_iter:
     print ('-----------------')
@@ -217,4 +217,3 @@ rtv_list = [[out_dict[x[0]]]+ list(x) for x in all_node_vals if x[0] in out_dict
 out_list = [[x[0]] + ['s' + x[1][1:]] + x[2:] if x[1] in socks_list else x for x in rtv_list]
 out_list = sorted(out_list, key=lambda x: x[2])
 pd.DataFrame(out_list).to_csv(outfile, header=False, index=False)
-pd.DataFrame(rtv_list).to_csv(outfile, header=False, index=False)
