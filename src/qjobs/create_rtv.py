@@ -51,7 +51,7 @@ wait
 exit 0
 '''
 
-cmd_template = 'python rtv.py %s %d %d %d %d %d %d %d %d %d %d %d'
+cmd_template = 'python rtv.py %s %d %d %d %d %d %d %d %d %d %d %d %d'
 
 
 if __name__ == '__main__':
@@ -123,7 +123,7 @@ if __name__ == '__main__':
                         for g1, g2, g3, g4 in itertools.product(g1_list, g2_list, g3_list, g4_list):
                             if g3 == g4 != 1:
                                 continue
-                            cmd = cmd_template % (parsed.data, a1, a2, b1, b2, g1, g2, g3, g4, maxiter, tnum, vnum)
+                            cmd = cmd_template % (parsed.data, a1, a2, b1, b2, g1, g2, g3, g4, maxiter, k, n, ind)
                             cmd_list += [cmd]
                             target_path = '../../res/%s/%s/%s-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d.csv' % (parsed.alg, parsed.data, parsed.data, a1, a2, b1, b2, g1, g2, g3, g4, k, n, ind)
                             job_path = './%s/%s-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d-%d.qjob' % (parsed.alg, parsed.data, a1, a2, b1, b2, g1, g2, g3, g4, k, n, ind)
