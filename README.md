@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Structure
 ```
 .
@@ -18,3 +19,6 @@ Table of contents
 + `rev2data` include the data for rev2 project.
 + `src` include the code for the fake review project.
 
+=======
+# DataMining
+>>>>>>> 2f987a89ffbe580e193c4ca1d3499e7a94e63df4
